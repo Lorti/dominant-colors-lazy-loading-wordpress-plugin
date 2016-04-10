@@ -38,12 +38,7 @@ The plugin is compatible with [RICG Responsive Images
 == Changelog ==
 
 = 0.2 =
-* Improved plugin now also affects WordPress galleries.
+* Galleries added via the default `[gallery]` shortcode are now also lazy loaded while showing the dominant color of each image as a placeholder.
 
 = 0.1 =
 * Initial release -- plugin seems to work ;)
-
-== Upgrade Notice ==
-
-= 0.2 =
-Galleries added via the default `[gallery]` shortcode are now also lazy loaded while showing the dominant color of each image as a placeholder.
