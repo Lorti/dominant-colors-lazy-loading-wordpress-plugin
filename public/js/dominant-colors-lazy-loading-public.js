@@ -13,7 +13,7 @@
 				image.src = image.getAttribute( 'data-src' );
 				image.removeAttribute( 'data-src' );
 
-				if ( image.hasAttribute( 'srcset' ) ) {
+				if ( image.hasAttribute( 'data-srcset' ) ) {
 					image.srcset = image.getAttribute( 'data-srcset' );
 					image.removeAttribute( 'data-srcset' );
 				}
