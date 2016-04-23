@@ -54,4 +54,5 @@ class PublicTest extends WP_UnitTestCase {
 		$this->assertEquals( $expected, $actual );
 
 	}
+
 }

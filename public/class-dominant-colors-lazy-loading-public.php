@@ -114,9 +114,9 @@ class Dominant_Colors_Lazy_Loading_Public {
 		global $post;
 
 		$selected_images = $attachment_ids = array();
-		$gallery_images = $this->get_gallery_attachment_ids ( $post->ID );
+		$gallery_images  = $this->get_gallery_attachment_ids( $post->ID );
 
-		foreach( $matches[0] as $image ) {
+		foreach ( $matches[0] as $image ) {
 
 			$attachment_id = null;
 
@@ -140,7 +140,7 @@ class Dominant_Colors_Lazy_Loading_Public {
 		if ( count( $attachment_ids ) > 1 ) {
 			update_meta_cache( 'post', array_keys($attachment_ids) );
 		}
-		
+
 		foreach ( $selected_images as $image => $attachment_id ) {
 			$dominant_color = get_post_meta( $attachment_id, 'dominant_color', true );
 			$content = str_replace( $image, $this->replace_source_with_dominant_color( $image, $dominant_color ), $content );
