@@ -37,7 +37,7 @@ The plugin is compatible with [RICG Responsive Images
 
 == Changelog ==
 
-= 0.2.2=
+= 0.2.2 =
 * Fixed a bug where responsive images weren't revealed properly.
 
 = 0.2 =
