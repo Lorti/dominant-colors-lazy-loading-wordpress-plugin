@@ -17,7 +17,7 @@
  * Plugin Name:       Dominant Colors Lazy Loading
  * Plugin URI:        https://manu.ninja/dominant-colors-for-lazy-loading-images
  * Description:       This plugin allows you to lazy load your images while showing the dominant color of each image as a placeholder – like Pinterest or Google Images.
- * Version:           0.2.1
+ * Version:           0.2.2
  * Author:            Manuel Wieser
  * Author URI:        https://manu.ninja/
  * License:           GPL-2.0+

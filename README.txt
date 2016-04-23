@@ -4,7 +4,7 @@ Donate link: https://manu.ninja/
 Tags: images, dominant colors, lazy loading, pinterest, javascript, optimization, performance, bandwidth
 Requires at least: 4.4
 Tested up to: 4.4.2
-Stable tag: 0.2.1
+Stable tag: 0.2.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -36,6 +36,9 @@ The plugin is compatible with [RICG Responsive Images
 2. Activate the plugin through the 'Plugins' menu in WordPress.
 
 == Changelog ==
+
+= 0.2.2=
+* Fixed a bug where responsive images weren't revealed properly.
 
 = 0.2 =
 * Galleries added via the default `[gallery]` shortcode are now also lazy loaded while showing the dominant color of each image as a placeholder.
