@@ -13,7 +13,6 @@ The plugin is compatible with [RICG Responsive Images
 
 ## What do I plan on adding in the next versions?
 
-* Automatically wrapping flexible images (`max-width: 100%; height: auto;`) so that the placeholder has the right aspect ratio.
 * Ability to change the dominant color to a custom color in the attachment details.
 * Ability to choose a dominant color from a reduced color palette.
 * Option to enable tiny thumbnails as described on [manu.ninja](https://manu.ninja/dominant-colors-for-lazy-loading-images).
@@ -28,6 +27,11 @@ The plugin is compatible with [RICG Responsive Images
 2. Activate the plugin through the 'Plugins' menu in WordPress.
 
 ## Changelog
+
+### 0.3.0
+* Added an option to use SVG placeholders as described by [Shaw](http://codepen.io/shshaw/post/responsive-placeholder-image). SVG placeholders have the same pixel size and aspect ratio as the original images, instead of being a single square pixel. This way responsive images do not need a wrapper for preserving the original aspect ratio. This crosses "Automatically wrapping flexible images (`max-width: 100%; height: auto;`) so that the placeholder has the right aspect ratio." off the road map ;)
+* Images with no dominant color stored in the database are now automatically skipped. The functionality to recalculate dominant colors for all images is the next feature I'm going to implement.
+
 
 ### 0.2.2
 * Fixed a bug where responsive images weren't revealed properly.

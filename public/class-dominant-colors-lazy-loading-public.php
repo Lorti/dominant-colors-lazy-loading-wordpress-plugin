@@ -142,11 +142,13 @@ class Dominant_Colors_Lazy_Loading_Public {
 			update_meta_cache( 'post', array_keys( $attachment_ids ) );
 		}
 
+		$format = get_option( 'dominant_colors_placeholder_format', 'svg' );
+
 		foreach ( $selected_images as $image => $attachment_id ) {
 			$dominant_color = get_post_meta( $attachment_id, 'dominant_color', true );
 			if ( ! empty( $dominant_color ) ) {
-					$content = str_replace( $image, $this->replace_source_with_dominant_color( $image, $dominant_color ), $content );
-				}
+				$content = str_replace( $image, $this->replace_source_with_dominant_color( $image, $dominant_color, $format ), $content );
+			}
 		}
 
 		return $content;
@@ -188,11 +190,11 @@ class Dominant_Colors_Lazy_Loading_Public {
 	 *
 	 * @param $image
 	 * @param $color
-	 * @param bool $gif
+	 * @param $format
 	 *
 	 * @return string
 	 */
-	public function replace_source_with_dominant_color( $image, $color, $gif = true ) {
+	public function replace_source_with_dominant_color( $image, $color, $format ) {
 		if ( empty( $color ) ) {
 			return $image;
 		}
@@ -215,7 +217,7 @@ class Dominant_Colors_Lazy_Loading_Public {
 			$image = str_replace( '<img', '<img class="lazy"', $image );
 		}
 
-		if ( $gif ) {
+		if ( ! strcmp($format, 'gif') ) {
 
 			$header                    = '474946383961';
 			$logical_screen_descriptor = '01000100800100';
@@ -238,16 +240,14 @@ class Dominant_Colors_Lazy_Loading_Public {
 			return str_replace( $match_src[0], sprintf( 'src="%s" data-src="%s"', $placeholder, $image_src, $color ), $image );
 
 		} else {
-
-			// http://codepen.io/shshaw/post/responsive-placeholder-image
-
+			
 			$image_width  = intval( preg_match( '/width="(\d+)"/', $image, $match_width ) ? $match_width[1] : 1 );
 			$image_height = intval( preg_match( '/height="(\d+)"/', $image, $match_height ) ? $match_height[1] : 1 );
 
 			$svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 %s %s"></svg>';
 			$placeholder = 'data:image/svg+xml;base64,' . base64_encode( sprintf( $svg, $image_width, $image_height ) ) ;
 
-			return str_replace( $match_src[0], sprintf( 'src="%s" data-src="%s" style="background: #%s;', $placeholder, $image_src, $color ), $image );
+			return str_replace( $match_src[0], sprintf( 'src="%s" data-src="%s" style="background: #%s;"', $placeholder, $image_src, $color ), $image );
 
 		}
 

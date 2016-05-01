@@ -69,7 +69,7 @@ class Dominant_Colors_Lazy_Loading {
 	public function __construct() {
 
 		$this->plugin_name = 'dominant-colors-lazy-loading';
-		$this->version = '0.2.2';
+		$this->version = '0.3.0';
 
 		$this->load_dependencies();
 		$this->set_locale();
@@ -154,7 +154,8 @@ class Dominant_Colors_Lazy_Loading {
 //		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 //		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 
-//		$this->loader->add_action( 'admin_menu', $plugin_admin, 'add_options_page' );
+		$this->loader->add_action( 'admin_menu', $plugin_admin, 'add_options_page' );
+		$this->loader->add_action( 'admin_init', $plugin_admin, 'register_settings' );
 
 		$this->loader->add_action( 'add_attachment', $plugin_admin, 'add_dominant_color_post_meta' );
 

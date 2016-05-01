@@ -127,6 +127,56 @@ class Dominant_Colors_Lazy_Loading_Admin {
 	}
 
 	/**
+	 * Register all related settings of this plugin
+	 *
+	 * @since  0.3.0
+	 */
+	public function register_settings() {
+
+		add_settings_section(
+			'dominant_colors_general',
+			__( 'Placeholders', 'dominant-colors-lazy-loading' ),
+			array( $this, 'dominant_colors_general_callback' ),
+			$this->plugin_name
+		);
+
+		add_settings_field(
+			'dominant_colors_placeholder_format',
+			__( 'Format', 'dominant-colors-lazy-loading' ),
+			array( $this, 'dominant_colors_placeholder_format_callback' ),
+			$this->plugin_name,
+			'dominant_colors_general',
+			array( 'label_for' => 'dominant_colors_placeholder_format' )
+		);
+
+		register_setting( $this->plugin_name, 'dominant_colors_placeholder_format' );
+
+	}
+
+	public function dominant_colors_general_callback() {
+		echo '<p>' . __( 'If you want to preserve the aspect ratio of responsive images enable SVG placeholders.<br>If you care about transferred bytes, browser compatibility or preserve the aspect ratio yourself use GIF placeholders.', 'dominant-colors-lazy-loading' ) . '</p>';
+	}
+
+	public function dominant_colors_placeholder_format_callback() {
+		$format = get_option( 'dominant_colors_placeholder_format' );
+		?>
+		<fieldset>
+			<label>
+				<input type="radio" name="dominant_colors_placeholder_format"
+				       value="svg" <?php checked( $format, 'svg' ); ?>>
+				<?php _e( 'SVG (More bytes, preserves image aspect ratio)', 'dominant-colors-lazy-loading' ); ?>
+			</label>
+			<br>
+			<label>
+				<input type="radio" name="dominant_colors_placeholder_format"
+				       value="gif" <?php checked( $format, 'gif' ); ?>>
+				<?php _e( 'GIF (Less bytes, compatible with ancient browsers)', 'dominant-colors-lazy-loading' ); ?>
+			</label>
+		</fieldset>
+		<?php
+	}
+
+	/**
 	 * Calculates the dominant color of an image attachment and saves it as post meta.
 	 *
 	 * @since   0.1.0
