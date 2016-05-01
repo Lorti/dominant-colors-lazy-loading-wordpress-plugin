@@ -27,7 +27,7 @@ class Dominant_Colors_Lazy_Loading_Public {
 	 *
 	 * @since    0.1.0
 	 * @access   private
-	 * @var      string    $plugin_name    The ID of this plugin.
+	 * @var      string $plugin_name The ID of this plugin.
 	 */
 	private $plugin_name;
 
@@ -36,7 +36,7 @@ class Dominant_Colors_Lazy_Loading_Public {
 	 *
 	 * @since    0.1.0
 	 * @access   private
-	 * @var      string    $version    The current version of this plugin.
+	 * @var      string $version The current version of this plugin.
 	 */
 	private $version;
 
@@ -44,13 +44,13 @@ class Dominant_Colors_Lazy_Loading_Public {
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    0.1.0
-	 * @param      string    $plugin_name       The name of the plugin.
-	 * @param      string    $version    The version of this plugin.
+	 * @param      string $plugin_name The name of the plugin.
+	 * @param      string $version The version of this plugin.
 	 */
 	public function __construct( $plugin_name, $version ) {
 
 		$this->plugin_name = $plugin_name;
-		$this->version = $version;
+		$this->version     = $version;
 
 	}
 
@@ -96,7 +96,7 @@ class Dominant_Colors_Lazy_Loading_Public {
 		 * class.
 		 */
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/dominant-colors-lazy-loading-public.js', array(), $this->version, true);
+		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/dominant-colors-lazy-loading-public.js', array(), $this->version, true );
 
 	}
 
@@ -125,7 +125,8 @@ class Dominant_Colors_Lazy_Loading_Public {
 				$attachment_id = absint( $class_id[1] );
 
 			} else if ( preg_match( '/src="([^"]+)"/', $image, $image_src ) &&
-			            array_key_exists( $image_src[1], $gallery_images ) ) {
+			            array_key_exists( $image_src[1], $gallery_images )
+			) {
 
 				$attachment_id = $gallery_images[ $image_src[1] ];
 
@@ -138,14 +139,14 @@ class Dominant_Colors_Lazy_Loading_Public {
 		}
 
 		if ( count( $attachment_ids ) > 1 ) {
-			update_meta_cache( 'post', array_keys($attachment_ids) );
+			update_meta_cache( 'post', array_keys( $attachment_ids ) );
 		}
 
 		foreach ( $selected_images as $image => $attachment_id ) {
 			$dominant_color = get_post_meta( $attachment_id, 'dominant_color', true );
 			if ( ! empty( $dominant_color ) ) {
-				$content = str_replace( $image, $this->replace_source_with_dominant_color( $image, $dominant_color ), $content );
-			}
+					$content = str_replace( $image, $this->replace_source_with_dominant_color( $image, $dominant_color ), $content );
+				}
 		}
 
 		return $content;
@@ -187,16 +188,17 @@ class Dominant_Colors_Lazy_Loading_Public {
 	 *
 	 * @param $image
 	 * @param $color
+	 * @param bool $gif
 	 *
 	 * @return string
 	 */
-	public function replace_source_with_dominant_color( $image, $color ) {
+	public function replace_source_with_dominant_color( $image, $color, $gif = true ) {
 		if ( empty( $color ) ) {
 			return $image;
 		}
 
 		$image_src = preg_match( '/src="([^"]+)"/', $image, $match_src ) ? $match_src[1] : '';
-		
+
 		if ( ! $image_src ) {
 			return $image;
 		}
@@ -204,24 +206,6 @@ class Dominant_Colors_Lazy_Loading_Public {
 		if ( preg_match( '/src="data/', $image ) ) {
 			return $image;
 		}
-
-		$header = '474946383961';
-		$logical_screen_descriptor = '01000100800100';
-		$image_descriptor = '2c000000000100010000';
-		$image_data = '0202440100';
-		$trailer = '3b';
-
-		$gif = implode([
-			$header,
-			$logical_screen_descriptor,
-			$color,
-			'000000',
-			$image_descriptor,
-			$image_data,
-			$trailer
-		]);
-
-		$placeholder = 'data:image/gif;base64,' . base64_encode(hex2bin($gif));
 
 		$image = str_replace( 'srcset', 'data-srcset', $image );
 
@@ -231,7 +215,42 @@ class Dominant_Colors_Lazy_Loading_Public {
 			$image = str_replace( '<img', '<img class="lazy"', $image );
 		}
 
-		return str_replace( $match_src[0], sprintf('src="%s" data-src="%s"', $placeholder, $image_src ), $image );
+		if ( $gif ) {
+
+			$header                    = '474946383961';
+			$logical_screen_descriptor = '01000100800100';
+			$image_descriptor          = '2c000000000100010000';
+			$image_data                = '0202440100';
+			$trailer                   = '3b';
+
+			$gif = implode( [
+				$header,
+				$logical_screen_descriptor,
+				$color,
+				'000000',
+				$image_descriptor,
+				$image_data,
+				$trailer
+			] );
+
+			$placeholder = 'data:image/gif;base64,' . base64_encode( hex2bin( $gif ) );
+
+			return str_replace( $match_src[0], sprintf( 'src="%s" data-src="%s"', $placeholder, $image_src, $color ), $image );
+
+		} else {
+
+			// http://codepen.io/shshaw/post/responsive-placeholder-image
+
+			$image_width  = intval( preg_match( '/width="(\d+)"/', $image, $match_width ) ? $match_width[1] : 1 );
+			$image_height = intval( preg_match( '/height="(\d+)"/', $image, $match_height ) ? $match_height[1] : 1 );
+
+			$svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 %s %s"></svg>';
+			$placeholder = 'data:image/svg+xml;base64,' . base64_encode( sprintf( $svg, $image_width, $image_height ) ) ;
+
+			return str_replace( $match_src[0], sprintf( 'src="%s" data-src="%s" style="background: #%s;', $placeholder, $image_src, $color ), $image );
+
+		}
+
 	}
 
 }
