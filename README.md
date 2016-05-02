@@ -57,5 +57,5 @@ echo $image;
 ### 0.2
 * Galleries added via the default `[gallery]` shortcode are now also lazy loaded while showing the dominant color of each image as a placeholder.
 
-## 0.1
+### 0.1
 * Initial release -- plugin seems to work ;)
