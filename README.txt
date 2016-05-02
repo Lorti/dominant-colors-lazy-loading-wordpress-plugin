@@ -19,7 +19,7 @@ I plan on adding multiple features in the near future, as outlined below. To ens
 The plugin is compatible with [RICG Responsive Images
 ](https://co.wordpress.org/plugins/ricg-responsive-images/), which has been added to WordPress 4.4 as default functionality.
 
-## What do I plan on adding in the next versions?
+### What do I plan on adding in the next versions?
 
 * Bulk operation to rebuild dominant colors for all existing images in the media library.
 * Ability to change the dominant color to a custom color in the attachment details.
