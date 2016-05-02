@@ -21,10 +21,10 @@ The plugin is compatible with [RICG Responsive Images
 
 ## What do I plan on adding in the next versions?
 
+* Bulk operation to rebuild dominant colors for all existing images in the media library.
 * Ability to change the dominant color to a custom color in the attachment details.
 * Ability to choose a dominant color from a reduced color palette.
 * Option to enable tiny thumbnails as described on [manu.ninja](https://manu.ninja/dominant-colors-for-lazy-loading-images).
-* Filter for lazy-loading images in custom templates and themes.
 * Function for retrieving the dominant color in various formats (hexadecimal, RGB, HSL…).
 * Fallback for visitors without JavaScript.
 * Translations, starting with German and French, as soon as there is an admin interface.
