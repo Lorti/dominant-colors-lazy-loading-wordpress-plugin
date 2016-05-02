@@ -149,14 +149,30 @@ class Dominant_Colors_Lazy_Loading_Admin {
 			array( 'label_for' => 'dominant_colors_placeholder_format' )
 		);
 
+		add_settings_field(
+			'dominant_colors_placeholder_fallback',
+			__( 'Fallback', 'dominant-colors-lazy-loading' ),
+			array( $this, 'dominant_colors_placeholder_fallback_callback' ),
+			$this->plugin_name,
+			'dominant_colors_general',
+			array( 'label_for' => 'dominant_colors_placeholder_fallback' )
+		);
+
 		register_setting( $this->plugin_name, 'dominant_colors_placeholder_format' );
+		register_setting( $this->plugin_name, 'dominant_colors_placeholder_fallback', array( $this, 'sanitize_hex_color' ) );
 
 	}
 
+	/**
+	 * @since  0.3.0
+	 */
 	public function dominant_colors_general_callback() {
 		echo '<p>' . __( 'If you want to preserve the aspect ratio of responsive images enable SVG placeholders.<br>If you care about transferred bytes, browser compatibility or preserve the aspect ratio yourself use GIF placeholders.', 'dominant-colors-lazy-loading' ) . '</p>';
 	}
 
+	/**
+	 * @since  0.3.0
+	 */
 	public function dominant_colors_placeholder_format_callback() {
 		$format = get_option( 'dominant_colors_placeholder_format' );
 		?>
@@ -174,6 +190,22 @@ class Dominant_Colors_Lazy_Loading_Admin {
 			</label>
 		</fieldset>
 		<?php
+	}
+
+	/**
+	 * @since  0.4.0
+	 */
+	public function dominant_colors_placeholder_fallback_callback() {
+		$fallback = get_option( 'dominant_colors_placeholder_fallback' );
+		echo '#<input type="text" name="dominant_colors_placeholder_fallback" id="dominant_colors_placeholder_fallback" value="' . $fallback . '" placeholder="bada55">';
+	}
+
+	/**
+	 * @since  0.4.0
+	 */
+	public function sanitize_hex_color( $color ) {
+		if ( preg_match('/^[a-f0-9]{6}$/', $color ) )
+			return $color;
 	}
 
 	/**

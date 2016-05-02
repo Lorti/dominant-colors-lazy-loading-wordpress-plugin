@@ -1,5 +1,3 @@
-# Dominant Colors Lazy Loading
-
 This plugin allows you to lazy load your images while showing the dominant color of each image as a placeholder – like Pinterest or Google Images.
 
 ## Description
@@ -26,7 +24,23 @@ The plugin is compatible with [RICG Responsive Images
 1. Upload `dominant-colors-lazy-loading` folder to the `/wp-content/plugins/` directory.
 2. Activate the plugin through the 'Plugins' menu in WordPress.
 
+## Frequently Asked Questions
+
+= Why are no dominant colors calculated? =
+
+Please make sure that you have installed and activated the `imagick` PHP extension. Currently the dominant color is only calculated upon initial upload of an image. A bulk operation to rebuilt colors is one of the next features I'm going to implement.
+
+= How do I use the custom filter in my themes? =
+
+`$image = get_the_post_thumbnail( $post_id );
+$image = apply_filters( 'dominant_colors', $image, get_post_thumbnail_id ( $post_id ) );
+echo $image;`
+
 ## Changelog
+
+### 0.4.0
+* Filter for lazy-loading images in custom templates and themes added.
+* Added an option to specify a fallback color if no dominant color was found.
 
 ### 0.3.0
 * Added an option to use SVG placeholders as described by [Shaw](http://codepen.io/shshaw/post/responsive-placeholder-image). SVG placeholders have the same pixel size and aspect ratio as the original images, instead of being a single square pixel. This way responsive images do not need a wrapper for preserving the original aspect ratio. This crosses "Automatically wrapping flexible images (`max-width: 100%; height: auto;`) so that the placeholder has the right aspect ratio." off the road map ;)

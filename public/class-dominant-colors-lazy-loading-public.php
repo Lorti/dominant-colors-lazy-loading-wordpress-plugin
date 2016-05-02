@@ -103,7 +103,11 @@ class Dominant_Colors_Lazy_Loading_Public {
 	/**
 	 * Replace images with placeholders in the content.
 	 *
-	 * @since    0.1.0
+	 * @since 0.1.0
+	 *
+	 * @param $content
+	 *
+	 * @return string
 	 */
 	public function filter( $content ) {
 
@@ -146,12 +150,46 @@ class Dominant_Colors_Lazy_Loading_Public {
 
 		foreach ( $selected_images as $image => $attachment_id ) {
 			$dominant_color = get_post_meta( $attachment_id, 'dominant_color', true );
+			if ( empty( $dominant_color ) ) {
+				$dominant_color = get_option( 'dominant_colors_placeholder_fallback' );
+			}
 			if ( ! empty( $dominant_color ) ) {
 				$content = str_replace( $image, $this->replace_source_with_dominant_color( $image, $dominant_color, $format ), $content );
 			}
 		}
 
 		return $content;
+
+	}
+
+	/**
+	 * Replace an image in the theme with a placeholder.
+	 *
+	 * @since 0.4.0
+	 *
+	 * @param $image
+	 * @param $attachment_id
+	 *
+	 * @return string
+	 */
+	public function theme_filter( $image, $attachment_id ) {
+
+		if ( ! preg_match_all( '/<img [^>]+>/', $image, $matches ) ) {
+			return $image;
+		}
+
+		$format = get_option( 'dominant_colors_placeholder_format', 'svg' );
+		$dominant_color = get_post_meta( $attachment_id, 'dominant_color', true );
+
+		if ( empty( $dominant_color ) ) {
+			$dominant_color = get_option( 'dominant_colors_placeholder_fallback' );
+		}
+
+		if ( ! empty( $dominant_color ) ) {
+			$image = $this->replace_source_with_dominant_color( $image, $dominant_color, $format );
+		}
+
+		return $image;
 
 	}
 

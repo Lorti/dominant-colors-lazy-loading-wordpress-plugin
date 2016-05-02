@@ -69,7 +69,7 @@ class Dominant_Colors_Lazy_Loading {
 	public function __construct() {
 
 		$this->plugin_name = 'dominant-colors-lazy-loading';
-		$this->version = '0.3.0';
+		$this->version = '0.4.0';
 
 		$this->load_dependencies();
 		$this->set_locale();
@@ -176,6 +176,7 @@ class Dominant_Colors_Lazy_Loading {
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 
 		$this->loader->add_filter( 'the_content', $plugin_public, 'filter', 200 );
+		$this->loader->add_filter( 'dominant_colors', $plugin_public, 'theme_filter', 200, 2 );
 
 	}
 
