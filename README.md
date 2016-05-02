@@ -1,3 +1,5 @@
+# Dominant Colors Lazy Loading
+
 This plugin allows you to lazy load your images while showing the dominant color of each image as a placeholder – like Pinterest or Google Images.
 
 ## Description
@@ -26,15 +28,17 @@ The plugin is compatible with [RICG Responsive Images
 
 ## Frequently Asked Questions
 
-= Why are no dominant colors calculated? =
+# Why are no dominant colors calculated?
 
 Please make sure that you have installed and activated the `imagick` PHP extension. Currently the dominant color is only calculated upon initial upload of an image. A bulk operation to rebuilt colors is one of the next features I'm going to implement.
 
-= How do I use the custom filter in my themes? =
+# How do I use the custom filter in my themes?
 
-`$image = get_the_post_thumbnail( $post_id );
+```
+$image = get_the_post_thumbnail( $post_id );
 $image = apply_filters( 'dominant_colors', $image, get_post_thumbnail_id ( $post_id ) );
-echo $image;`
+echo $image;
+```
 
 ## Changelog
 
