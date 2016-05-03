@@ -270,8 +270,7 @@ class Dominant_Colors_Lazy_Loading_Admin {
 		$attachment_id = intval( $_POST['attachment-id'] );
 		$result        = $this->add_dominant_color_post_meta( $attachment_id );
 		wp_send_json( array(
-			'success' => is_string( $result ),
-			'message' => $result,
+			'success' => is_string( $result )
 		) );
 	}
 
