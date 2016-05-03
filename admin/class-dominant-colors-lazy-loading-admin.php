@@ -237,7 +237,7 @@ class Dominant_Colors_Lazy_Loading_Admin {
 			if ( ! class_exists( 'Imagick', false ) )
 				return;
 
-			$path = wp_get_attachment_image_src( $post_id )[0];
+			$path = get_attached_file( $post_id );
 
 			try {
 				$image = new Imagick( $path );
