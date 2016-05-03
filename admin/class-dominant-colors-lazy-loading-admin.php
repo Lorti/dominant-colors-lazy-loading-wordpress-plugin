@@ -123,7 +123,22 @@ class Dominant_Colors_Lazy_Loading_Admin {
 	 * @since  0.1.0
 	 */
 	public function display_options_page() {
+		$attachments = $this->list_images_without_dominant_colors();
+		$ajax_url    = admin_url( 'admin-ajax.php' );
+		$ajax_nonce  = wp_create_nonce( 'recalculate_dominant_color_post_meta' );
 		include_once 'partials/dominant-colors-lazy-loading-admin-display.php';
+	}
+
+	public function list_images_without_dominant_colors() {
+		$args = array(
+			'post_type'      => 'attachment',
+			'posts_per_page' => - 1,
+			'meta_key'       => 'dominant_color',
+			'meta_value'     => '',
+			'meta_compare'   => 'NOT EXISTS'
+		);
+
+		return get_posts( $args );
 	}
 
 	/**
@@ -214,7 +229,7 @@ class Dominant_Colors_Lazy_Loading_Admin {
 	 * @since   0.1.0
 	 *
 	 * @param $post_id
-	 * @return void|WP_Error
+	 * @return string|WP_Error
 	 */
 	public function add_dominant_color_post_meta( $post_id ) {
 		if ( wp_attachment_is_image( $post_id )) {
@@ -229,14 +244,35 @@ class Dominant_Colors_Lazy_Loading_Admin {
 				$image->resizeImage( 250, 250, Imagick::FILTER_GAUSSIAN, 1 );
 				$image->quantizeImage( 1, Imagick::COLORSPACE_RGB, 0, false, false );
 				$image->setFormat( 'RGB' );
-				update_post_meta( $post_id, 'dominant_color', substr(bin2hex($image), 0, 6));
+				$dominant_color = substr( bin2hex( $image ), 0, 6 );
+				update_post_meta( $post_id, 'dominant_color', $dominant_color );
+				return $dominant_color;
 			}
 			catch ( Exception $e ) {
 				return new WP_Error( 'invalid_image', $e->getMessage(), $path );
 			}
 
 		}
+	}
 
+	/**
+	 * Ajax action for calculating the missing dominant color of an image attachment.
+	 *
+	 * @since   0.5.0
+	 */
+	function recalculate_dominant_color_post_meta() {
+		if ( ! current_user_can( 'manage_options' ) ||
+		     ! wp_verify_nonce( $_REQUEST['nonce'], 'recalculate_dominant_color_post_meta' )
+		) {
+			wp_die();
+		}
+
+		$attachment_id = intval( $_POST['attachment-id'] );
+		$result        = $this->add_dominant_color_post_meta( $attachment_id );
+		wp_send_json( array(
+			'success' => is_string( $result ),
+			'message' => $result,
+		) );
 	}
 
 }
