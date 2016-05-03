@@ -25,29 +25,33 @@
 		?>
 	</form>
 
-	<h3>Status</h3>
+	<?php if ( count( $attachments ) ): ?>
 
-	<p class="js-status-message">
-		<?php echo count( $attachments ); ?> images currently have no dominant color assigned.
-		Do you want to calculate them now?
-	</p>
-	<p><input class="button-secondary js-calculation-button"
-	          type="button"
-	          value="Calculate"
-	          data-ajax-url="<?php echo $ajax_url; ?>"
-	          data-ajax-nonce="<?php echo $ajax_nonce; ?>"></p>
+		<h3>Status</h3>
 
-	<table>
-		<?php foreach ( $attachments as $attachment ): ?>
-			<tr>
-				<td>
-					<?php echo $attachment->post_name; ?>
-				</td>
-				<td class="js-attachment-id" data-attachment-id="<?php echo $attachment->ID; ?>">
-					Pending
-				</td>
-			</tr>
-		<?php endforeach; ?>
-	</table>
+		<p class="js-status-message">
+			<?php echo count( $attachments ); ?> images currently have no dominant color assigned.
+			Do you want to calculate them now?
+		</p>
+		<p><input class="button-secondary js-calculation-button"
+		          type="button"
+		          value="Calculate"
+		          data-ajax-url="<?php echo $ajax_url; ?>"
+		          data-ajax-nonce="<?php echo $ajax_nonce; ?>"></p>
+
+		<table>
+			<?php foreach ( $attachments as $attachment ): ?>
+				<tr>
+					<td>
+						<?php echo $attachment->post_name; ?>
+					</td>
+					<td class="js-attachment-id" data-attachment-id="<?php echo $attachment->ID; ?>">
+						Pending
+					</td>
+				</tr>
+			<?php endforeach; ?>
+		</table>
+
+	<?php endif; ?>
 
 </div>
