@@ -4,7 +4,7 @@ Donate link: https://manu.ninja/
 Tags: images, dominant colors, lazy loading, pinterest, javascript, optimization, performance, bandwidth
 Requires at least: 4.4
 Tested up to: 4.4.2
-Stable tag: 0.5.0
+Stable tag: 0.5.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -46,6 +46,11 @@ $image = apply_filters( 'dominant_colors', $image, get_post_thumbnail_id ( $post
 echo $image;`
 
 ## Changelog
+
+### 0.5.1
+* Admin interface now shows an error if no ImageMagick PHP extension was found.
+* Admin interface is now ready for translation. There is a `.pot` file, go crazy ;)
+* German translations for the admin interface added.
 
 ### 0.5.0
 * Added a bulk operation in the settings for calculating missing dominant color meta values for existing images. Until recently colors were only calculated upon initial upload of an image.

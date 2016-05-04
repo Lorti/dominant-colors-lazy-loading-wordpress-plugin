@@ -5,69 +5,74 @@ msgstr ""
 "Project-Id-Version: Dominant Colors Lazy Loading 0.5.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/dominant-colors-"
 "lazy-loading\n"
-"POT-Creation-Date: 2016-05-04 09:18:40+00:00\n"
+"POT-Creation-Date: 2016-05-04 11:25+0200\n"
+"PO-Revision-Date: 2016-05-04 11:25+0200\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2016-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"X-Generator: Poedit 1.8.7\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: admin/class-dominant-colors-lazy-loading-admin.php:104
 msgid "All dominant colors have been calculated successfully."
-msgstr ""
+msgstr "Alle dominanten Farben konnten erfolgreich berechnet werden."
 
 #: admin/class-dominant-colors-lazy-loading-admin.php:105
 msgid ""
 "All attempts seem to have failed. Please make sure that the attachment files "
 "exist."
 msgstr ""
+"Alle Versuche sind offenbar fehlgeschlagen. Bitte stellen Sie sicher, dass "
+"die angehängten Dateien existieren."
 
 #: admin/class-dominant-colors-lazy-loading-admin.php:106
 msgid "{{success}} color(s) calculated, but {{error}} attempt(s) failed."
 msgstr ""
+"{{success}} Farbe(n) berechnet, aber {{error}} Versuch(e) fehlgeschlagen."
 
 #: admin/class-dominant-colors-lazy-loading-admin.php:107
 msgid "A single image currently has no dominant color assigned."
-msgstr ""
+msgstr "Einem Bild ist zurzeit keine dominante Farbe zugewiesen."
 
 #: admin/class-dominant-colors-lazy-loading-admin.php:108
 msgid "{{count}} images currently have no dominant color assigned."
-msgstr ""
+msgstr "{{count}} Bildern sind zurzeit keine dominanten Farben zugewiesen."
 
 #: admin/class-dominant-colors-lazy-loading-admin.php:109
 msgid "Calculating..."
-msgstr ""
+msgstr "Berechnung…"
 
 #: admin/class-dominant-colors-lazy-loading-admin.php:110
 msgid "<strong>Success</strong>"
-msgstr ""
+msgstr "<strong>Erfolg</strong>"
 
 #: admin/class-dominant-colors-lazy-loading-admin.php:111
 msgid "<strong>Error</strong>"
-msgstr ""
+msgstr "<strong>Fehler</strong>"
 
 #: admin/class-dominant-colors-lazy-loading-admin.php:123
 msgid "Dominant Colors Lazy Loading Settings"
-msgstr ""
+msgstr "Einstellungen zu Dominant Colors Lazy Loading"
 
-#. #-#-#-#-#  dominant-colors-lazy-loading.pot (Dominant Colors Lazy Loading 0.5.1)  #-#-#-#-#
 #. Plugin Name of the plugin/theme
 #: admin/class-dominant-colors-lazy-loading-admin.php:124
 msgid "Dominant Colors Lazy Loading"
-msgstr ""
+msgstr "Dominant Colors Lazy Loading"
 
 #: admin/class-dominant-colors-lazy-loading-admin.php:164
 msgid "Placeholders"
-msgstr ""
+msgstr "Platzhalter"
 
 #: admin/class-dominant-colors-lazy-loading-admin.php:171
 msgid "Format"
-msgstr ""
+msgstr "Format"
 
 #: admin/class-dominant-colors-lazy-loading-admin.php:180
 msgid "Fallback"
-msgstr ""
+msgstr "Fallback"
 
 #: admin/class-dominant-colors-lazy-loading-admin.php:196
 msgid ""
@@ -75,55 +80,61 @@ msgid ""
 "placeholders.<br>If you care about transferred bytes, browser compatibility "
 "or preserve the aspect ratio yourself use GIF placeholders."
 msgstr ""
+"Wählen Sie SVG-Platzhalter wenn sie das Seitenverhältnis von flexiblen "
+"Bildern erhalten möchten.<br>Wählen Sie GIF-Platzhalter wenn sie geringere "
+"Datenmengen und hohe Browserkompatibilität bevorzugen oder sich selbst um "
+"das Seitenverhältnis kümmern."
 
 #: admin/class-dominant-colors-lazy-loading-admin.php:209
 msgid "SVG (More bytes, preserves image aspect ratio)"
-msgstr ""
+msgstr "SVG (Mehr Daten, Seitenverhältnis bleibt erhalten)"
 
 #: admin/class-dominant-colors-lazy-loading-admin.php:215
 msgid "GIF (Less bytes, compatible with ancient browsers)"
-msgstr ""
+msgstr "GIF (Weniger Daten, kompatibel mit alten Browsern)"
 
 #: admin/partials/dominant-colors-lazy-loading-admin-display.php:23
 msgid "ImageMagick PHP extension was not detected."
-msgstr ""
+msgstr "ImageMagick-PHP-Erweiterung wurde nicht gefunden."
 
 #: admin/partials/dominant-colors-lazy-loading-admin-display.php:38
 msgid "Status"
-msgstr ""
+msgstr "Status"
 
 #: admin/partials/dominant-colors-lazy-loading-admin-display.php:41
 msgid "%s image currently has no dominant color assigned."
 msgid_plural "%s images currently have no dominant color assigned."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Einem Bild ist zurzeit keine dominante Farbe zugewiesen."
+msgstr[1] "%s Bildern sind zurzeit keine dominanten Farben zugewiesen."
 
 #: admin/partials/dominant-colors-lazy-loading-admin-display.php:43
 msgid "Do you want to calculate now?"
-msgstr ""
+msgstr "Möchten Sie die fehlenden Farben berechnen?"
 
 #: admin/partials/dominant-colors-lazy-loading-admin-display.php:47
 msgid "Calculate"
-msgstr ""
+msgstr "Berechnen"
 
 #: admin/partials/dominant-colors-lazy-loading-admin-display.php:56
 msgid "Pending"
-msgstr ""
+msgstr "Ausstehend"
 
 #. Plugin URI of the plugin/theme
 msgid "https://manu.ninja/dominant-colors-for-lazy-loading-images"
-msgstr ""
+msgstr "https://manu.ninja/dominant-colors-for-lazy-loading-images"
 
 #. Description of the plugin/theme
 msgid ""
 "This plugin allows you to lazy load your images while showing the dominant "
 "color of each image as a placeholder – like Pinterest or Google Images."
 msgstr ""
+"Dieses Plugin ermöglicht Ihnen beim Lazy Loading ihrer Bilder die Hauptfarbe "
+"des Bildes als Platzhalter anzuzeigen – genau wie auf Pinterest."
 
 #. Author of the plugin/theme
 msgid "Manuel Wieser"
-msgstr ""
+msgstr "Manuel Wieser"
 
 #. Author URI of the plugin/theme
 msgid "https://manu.ninja/"
-msgstr ""
+msgstr "https://manu.ninja/"

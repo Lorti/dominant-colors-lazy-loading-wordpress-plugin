@@ -41,6 +41,11 @@ echo $image;
 
 ## Changelog
 
+### 0.5.1
+* Admin interface now shows an error if no ImageMagick PHP extension was found.
+* Admin interface is now ready for translation. There is a `.pot` file, go crazy ;)
+* German translations for the admin interface added.
+
 ### 0.5.0
 * Added a bulk operation in the settings for calculating missing dominant color meta values for existing images. Until recently colors were only calculated upon initial upload of an image.
 

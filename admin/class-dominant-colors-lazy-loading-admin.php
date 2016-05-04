@@ -98,6 +98,18 @@ class Dominant_Colors_Lazy_Loading_Admin {
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/dominant-colors-lazy-loading-admin.js', array( 'jquery' ), $this->version, false );
 
+		wp_localize_script( $this->plugin_name, 'ajax_object', array(
+			'ajax_url'                => admin_url( 'admin-ajax.php' ),
+			'ajax_nonce'              => wp_create_nonce( 'recalculate_dominant_color_post_meta' ),
+			'success_message'         => __( 'All dominant colors have been calculated successfully.', 'dominant-colors-lazy-loading' ),
+			'error_message'           => __( 'All attempts seem to have failed. Please make sure that the attachment files exist.', 'dominant-colors-lazy-loading' ),
+			'result_message'          => __( '{{success}} color(s) calculated, but {{error}} attempt(s) failed.', 'dominant-colors-lazy-loading' ),
+			'status_message_singular' => __( 'A single image currently has no dominant color assigned.', 'dominant-colors-lazy-loading' ),
+			'status_message_plural'   => __( '{{count}} images currently have no dominant color assigned.', 'dominant-colors-lazy-loading' ),
+			'calculating_string'      => __( 'Calculating...', 'dominant-colors-lazy-loading' ),
+			'success_string'          => __( '<strong>Success</strong>', 'dominant-colors-lazy-loading' ),
+			'error_string'            => __( '<strong>Error</strong>', 'dominant-colors-lazy-loading' )
+		) );
 	}
 
 	/**
@@ -124,8 +136,6 @@ class Dominant_Colors_Lazy_Loading_Admin {
 	 */
 	public function display_options_page() {
 		$attachments = $this->list_images_without_dominant_colors();
-		$ajax_url    = admin_url( 'admin-ajax.php' );
-		$ajax_nonce  = wp_create_nonce( 'recalculate_dominant_color_post_meta' );
 		$imagick     = class_exists( 'Imagick', false );
 		include_once 'partials/dominant-colors-lazy-loading-admin-display.php';
 	}

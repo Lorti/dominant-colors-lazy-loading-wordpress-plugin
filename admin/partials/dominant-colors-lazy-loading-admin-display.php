@@ -35,7 +35,7 @@
 
 	<?php if ( $imagick && count( $attachments ) ): ?>
 
-		<h3<?php _e( 'Status', 'dominant-colors-lazy-loading' ); ?></h3>
+		<h3><?php _e( 'Status', 'dominant-colors-lazy-loading' ); ?></h3>
 
 		<p class="js-status-message">
 			<?php printf( _n( '%s image currently has no dominant color assigned.', '%s images currently have no dominant color assigned.', count( $attachments ), 'dominant-colors-lazy-loading' ), count( $attachments ) ); ?>
@@ -43,11 +43,8 @@
 			<?php _e( 'Do you want to calculate now?', 'dominant-colors-lazy-loading' ); ?>
 		</p>
 
-		<p><input class="button-secondary js-calculation-button"
-		          type="button"
-		          value="<?php _e( 'Calculate', 'dominant-colors-lazy-loading' ); ?>"
-		          data-ajax-url="<?php echo $ajax_url; ?>"
-		          data-ajax-nonce="<?php echo $ajax_nonce; ?>"></p>
+		<p><input type="button" class="button-secondary js-calculation-button"
+		          value="<?php _e( 'Calculate', 'dominant-colors-lazy-loading' ); ?>"></p>
 
 		<table>
 			<?php foreach ( $attachments as $attachment ): ?>

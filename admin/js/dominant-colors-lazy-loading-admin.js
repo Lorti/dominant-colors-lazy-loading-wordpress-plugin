@@ -13,24 +13,29 @@
 
         var calculate = function (index) {
             var $item = $items.eq(index);
-            $item.html('Calculating…');
+            $item.html(ajax_object.calculating_string);
 
             var data = {
                 'action': 'recalculate_dominant_color_post_meta',
-                'nonce': $button.attr('data-ajax-nonce'),
+                'nonce': ajax_object.ajax_nonce,
                 'attachment-id': $item.attr('data-attachment-id')
             };
 
-            $.post($button.attr('data-ajax-url'), data, function (response) {
+            $.post(ajax_object.ajax_url, data, function (response) {
                 if (response.success) {
                     success++;
-                    $item.html('<strong>Success</strong>');
+                    $item.html(ajax_object.success_string);
                 } else {
                     error++;
-                    $item.html('<strong>Error</strong>');
+                    $item.html(ajax_object.error_string);
                 }
 
-                $status.html($items.length - success + ' images currently have no dominant color assigned.');
+                var count = $items.length - success;
+                if (count !== 1) {
+                    $status.html(ajax_object.status_message_plural.replace('{{count}}', count));
+                } else {
+                    $status.html(ajax_object.status_message_singular);
+                }
 
                 items--;
                 if (items > 0) {
@@ -43,13 +48,14 @@
 
         var result = function (success, error) {
             if (success && !error) {
-                return 'All dominant colors have been calculated successfully.'
+                return ajax_object.success_message;
+
             }
             if (!success && error) {
-                return 'All attempts seem to have failed. Do you have the ImageMagick PHP extension installed?'
+                return ajax_object.error_message;
             }
             if (success && error) {
-                return success + ' color(s) calculated, but ' + error + ' attempt(s) seem to have failed.'
+                return ajax_object.result_message.replace('{{success}}', success).replace('{{error}}', error);
             }
         };
 
