@@ -26,7 +26,6 @@ The plugin is compatible with [RICG Responsive Images
 * Option to enable tiny thumbnails as described on [manu.ninja](https://manu.ninja/dominant-colors-for-lazy-loading-images).
 * Function for retrieving the dominant color in various formats (hexadecimal, RGB, HSL…).
 * Fallback for visitors without JavaScript.
-* Translations, starting with German and French, as soon as there is an admin interface.
 
 ## Installation
 
