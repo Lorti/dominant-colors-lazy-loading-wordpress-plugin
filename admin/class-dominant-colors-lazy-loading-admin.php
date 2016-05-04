@@ -126,6 +126,7 @@ class Dominant_Colors_Lazy_Loading_Admin {
 		$attachments = $this->list_images_without_dominant_colors();
 		$ajax_url    = admin_url( 'admin-ajax.php' );
 		$ajax_nonce  = wp_create_nonce( 'recalculate_dominant_color_post_meta' );
+		$imagick     = class_exists( 'Imagick', false );
 		include_once 'partials/dominant-colors-lazy-loading-admin-display.php';
 	}
 

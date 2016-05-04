@@ -17,6 +17,14 @@
 
 	<h2><?php echo esc_html( get_admin_page_title() ); ?></h2>
 
+	<?php if ( ! $imagick ): ?>
+
+		<div class="notice notice-error">
+			<p><?php _e( 'ImageMagick PHP extension was not detected.', 'dominant-colors-lazy-loading' ); ?></p>
+		</div>
+
+	<?php endif; ?>
+
 	<form action="options.php" method="post">
 		<?php
 			settings_fields( $this->plugin_name );
@@ -25,25 +33,16 @@
 		?>
 	</form>
 
-	<?php if( ! class_exists( 'Imagick', false ) ) : ?>
-		
-		<h3><?php _e( 'ImageMagick PHP extension was not detected', 'dominant-colors-lazy-loading' ); ?></h3>
-		
-	<?php else : ?> 
-
-	<?php if ( count( $attachments ) ): ?>
+	<?php if ( $imagick && count( $attachments ) ): ?>
 
 		<h3<?php _e( 'Status', 'dominant-colors-lazy-loading' ); ?></h3>
 
 		<p class="js-status-message">
-
 			<?php printf( _n( '%s image currently has no dominant color assigned.', '%s images currently have no dominant color assigned.', count( $attachments ), 'dominant-colors-lazy-loading' ), count( $attachments ) ); ?>
-
-			<br />
-
-			<?php _e( 'Do you want to calculate now?', 'dominant-colors-lazy-loading'); ?>
-
+			<br>
+			<?php _e( 'Do you want to calculate now?', 'dominant-colors-lazy-loading' ); ?>
 		</p>
+
 		<p><input class="button-secondary js-calculation-button"
 		          type="button"
 		          value="<?php _e( 'Calculate', 'dominant-colors-lazy-loading' ); ?>"
@@ -64,5 +63,5 @@
 		</table>
 
 	<?php endif; ?>
-<?php endif; ?>
+
 </div>
