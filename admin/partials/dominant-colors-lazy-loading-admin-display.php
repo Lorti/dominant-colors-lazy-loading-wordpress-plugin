@@ -25,17 +25,28 @@
 		?>
 	</form>
 
+	<?php if( ! class_exists( 'Imagick', false ) ) : ?>
+		
+		<h3><?php _e( 'ImageMagick PHP extension was not detected', 'dominant-colors-lazy-loading' ); ?></h3>
+		
+	<?php else : ?> 
+
 	<?php if ( count( $attachments ) ): ?>
 
-		<h3>Status</h3>
+		<h3<?php _e( 'Status', 'dominant-colors-lazy-loading' ); ?></h3>
 
 		<p class="js-status-message">
-			<?php echo count( $attachments ); ?> images currently have no dominant color assigned.
-			Do you want to calculate them now?
+
+			<?php printf( _n( '%s image currently has no dominant color assigned.', '%s images currently have no dominant color assigned.', count( $attachments ), 'dominant-colors-lazy-loading' ), count( $attachments ) ); ?>
+
+			<br />
+
+			<?php _e( 'Do you want to calculate now?', 'dominant-colors-lazy-loading'); ?>
+
 		</p>
 		<p><input class="button-secondary js-calculation-button"
 		          type="button"
-		          value="Calculate"
+		          value="<?php _e( 'Calculate', 'dominant-colors-lazy-loading' ); ?>"
 		          data-ajax-url="<?php echo $ajax_url; ?>"
 		          data-ajax-nonce="<?php echo $ajax_nonce; ?>"></p>
 
@@ -46,12 +57,12 @@
 						<?php echo $attachment->post_name; ?>
 					</td>
 					<td class="js-attachment-id" data-attachment-id="<?php echo $attachment->ID; ?>">
-						Pending
+						<?php _e( 'Pending', 'dominant-colors-lazy-loading' ); ?>
 					</td>
 				</tr>
 			<?php endforeach; ?>
 		</table>
 
 	<?php endif; ?>
-
+<?php endif; ?>
 </div>
