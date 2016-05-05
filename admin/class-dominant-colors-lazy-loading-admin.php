@@ -235,7 +235,7 @@ class Dominant_Colors_Lazy_Loading_Admin {
 	}
 
 	/**
-	 * Calculates the dominant color of an image attachment and saves it as post meta.
+	 * Calculates the dominant color of an attachment and saves it as post meta.
 	 *
 	 * @since   0.1.0
 	 *
@@ -251,13 +251,8 @@ class Dominant_Colors_Lazy_Loading_Admin {
 			$path = get_attached_file( $post_id );
 
 			try {
-				$image = new Imagick( $path );
-				$image->resizeImage( 250, 250, Imagick::FILTER_GAUSSIAN, 1 );
-				$image->quantizeImage( 1, Imagick::COLORSPACE_RGB, 0, false, false );
-				$image->setFormat( 'RGB' );
-				$dominant_color = substr( bin2hex( $image ), 0, 6 );
+				$dominant_color = $this->calculate_dominant_color( $path );
 				update_post_meta( $post_id, 'dominant_color', $dominant_color );
-				return $dominant_color;
 			}
 			catch ( Exception $e ) {
 				return new WP_Error( 'invalid_image', $e->getMessage(), $path );
@@ -283,6 +278,22 @@ class Dominant_Colors_Lazy_Loading_Admin {
 		wp_send_json( array(
 			'success' => is_string( $result )
 		) );
+	}
+
+	/**
+	 * Calculates the dominant color of an image.
+	 *
+	 * @since   0.5.2
+	 *
+	 * @return string
+	 */
+	function calculate_dominant_color( $path ) {
+		$image = new Imagick( $path );
+		$image->resizeImage( 256, 256, Imagick::FILTER_QUADRATIC, 1 );
+		$image->quantizeImage( 1, Imagick::COLORSPACE_RGB, 0, false, false );
+		$image->setFormat( 'RGB' );
+
+		return substr( bin2hex( $image ), 0, 6 );
 	}
 
 }
