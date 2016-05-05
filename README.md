@@ -40,6 +40,11 @@ echo $image;
 
 ## Changelog
 
+### 0.5.2
+* Portuguese translation added by Pedro Mendonça.
+* Simple test suite for admin functions added.
+* Changed all `[]` array literals to the classic `array()` for compatibility.
+
 ### 0.5.1
 * Admin interface now shows an error if no ImageMagick PHP extension was found.
 * Admin interface is now ready for translation. There is a `.pot` file, go crazy ;)
