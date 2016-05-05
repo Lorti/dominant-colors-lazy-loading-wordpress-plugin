@@ -263,7 +263,7 @@ class Dominant_Colors_Lazy_Loading_Public {
 			$image_data                = '0202440100';
 			$trailer                   = '3b';
 
-			$gif = implode( [
+			$gif = implode( array(
 				$header,
 				$logical_screen_descriptor,
 				$color,
@@ -271,7 +271,7 @@ class Dominant_Colors_Lazy_Loading_Public {
 				$image_descriptor,
 				$image_data,
 				$trailer
-			] );
+			) );
 
 			$placeholder = 'data:image/gif;base64,' . base64_encode( hex2bin( $gif ) );
 

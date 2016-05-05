@@ -27,7 +27,7 @@ class PublicTest extends WP_UnitTestCase {
 		$content = sprintf( '[gallery ids="%s"]', join( ',', $ids ) );
 		$post_id = $this->factory->post->create( array( 'post_content' => $content ) );
 
-		$expected = [ ];
+		$expected = array();
 		foreach ( $ids as $i => $id ) {
 			$expected[ $urls[ $i ] ] = $id;
 		}
