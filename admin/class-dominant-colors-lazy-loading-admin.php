@@ -143,6 +143,7 @@ class Dominant_Colors_Lazy_Loading_Admin {
 	public function list_images_without_dominant_colors() {
 		$args = array(
 			'post_type'      => 'attachment',
+			'post_mime_type' => 'image',
 			'posts_per_page' => - 1,
 			'meta_key'       => 'dominant_color',
 			'meta_value'     => '',
