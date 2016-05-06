@@ -253,6 +253,7 @@ class Dominant_Colors_Lazy_Loading_Admin {
 			try {
 				$dominant_color = $this->calculate_dominant_color( $path );
 				update_post_meta( $post_id, 'dominant_color', $dominant_color );
+				return $dominant_color;
 			}
 			catch ( Exception $e ) {
 				return new WP_Error( 'invalid_image', $e->getMessage(), $path );

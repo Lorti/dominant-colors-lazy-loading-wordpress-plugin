@@ -40,6 +40,9 @@ echo $image;
 
 ## Changelog
 
+### 0.5.3
+* Fixed a bug in displaying whether calculation of an image failed or succeeded.
+
 ### 0.5.2
 * Portuguese translation added by Pedro Mendonça.
 * Simple test suite for admin functions added.
