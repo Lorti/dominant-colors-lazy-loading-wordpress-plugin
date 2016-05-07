@@ -69,7 +69,7 @@ class Dominant_Colors_Lazy_Loading {
 	public function __construct() {
 
 		$this->plugin_name = 'dominant-colors-lazy-loading';
-		$this->version = '0.5.3';
+		$this->version = '0.5.4';
 
 		$this->load_dependencies();
 		$this->set_locale();
@@ -151,13 +151,15 @@ class Dominant_Colors_Lazy_Loading {
 
 		$plugin_admin = new Dominant_Colors_Lazy_Loading_Admin( $this->get_plugin_name(), $this->get_version() );
 
-//		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
+		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'add_options_page' );
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'register_settings' );
 
 		$this->loader->add_action( 'wp_ajax_recalculate_dominant_color_post_meta', $plugin_admin, 'recalculate_dominant_color_post_meta' );
+		$this->loader->add_action( 'wp_ajax_next_batch_of_attachment_ids', $plugin_admin, 'next_batch_of_attachment_ids' );
+
 		$this->loader->add_action( 'add_attachment', $plugin_admin, 'add_dominant_color_post_meta' );
 
 	}
@@ -173,7 +175,6 @@ class Dominant_Colors_Lazy_Loading {
 
 		$plugin_public = new Dominant_Colors_Lazy_Loading_Public( $this->get_plugin_name(), $this->get_version() );
 
-//		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 
 		$this->loader->add_filter( 'the_content', $plugin_public, 'filter', 200 );

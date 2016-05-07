@@ -1,69 +1,94 @@
 (function ($) {
-    'use strict';
+	'use strict';
 
-    $(function () {
+	$( function () {
 
-        var $status = $('.js-status-message');
-        var $button = $('.js-calculation-button');
-        var $items = $('.js-attachment-id');
+		var $status = $( '.js-status-message' );
+		var $progress = $( '.js-progress-bar' );
+		var $button = $( '.js-calculation-button' );
 
-        var items = $items.length;
-        var success = 0;
-        var error = 0;
+		var total = window.attachment_total;
+		var ids = window.attachment_ids;
 
-        var calculate = function (index) {
-            var $item = $items.eq(index);
-            $item.html(ajax_object.calculating_string);
+		var runs = 0;
+		var success = 0;
+		var error = 0;
 
-            var data = {
-                'action': 'recalculate_dominant_color_post_meta',
-                'nonce': ajax_object.ajax_nonce,
-                'attachment-id': $item.attr('data-attachment-id')
-            };
+		var calculate = function () {
+			var id = ids.shift();
 
-            $.post(ajax_object.ajax_url, data, function (response) {
-                if (response.success) {
-                    success++;
-                    $item.html(ajax_object.success_string);
-                } else {
-                    error++;
-                    $item.html(ajax_object.error_string);
-                }
+			var data = {
+				'action': 'recalculate_dominant_color_post_meta',
+				'nonce': ajax_object.ajax_nonce,
+				'attachment-id': id
+			};
 
-                var count = $items.length - success;
-                if (count !== 1) {
-                    $status.html(ajax_object.status_message_plural.replace('{{count}}', count));
-                } else {
-                    $status.html(ajax_object.status_message_singular);
-                }
+			$.post( ajax_object.ajax_url, data, function ( response ) {
 
-                items--;
-                if (items > 0) {
-                    calculate(index + 1);
-                } else {
-                    $status.html(result(success, error));
-                }
-            });
-        };
+				if ( response.success ) {
+					success++;
+				} else {
+					error++;
+				}
 
-        var result = function (success, error) {
-            if (success && !error) {
-                return ajax_object.success_message;
+				runs++;
 
-            }
-            if (!success && error) {
-                return ajax_object.error_message;
-            }
-            if (success && error) {
-                return ajax_object.result_message.replace('{{success}}', success).replace('{{error}}', error);
-            }
-        };
+				$status.html( status( runs, total ) );
+				$progress.attr( 'value', runs );
 
-        $button.on('click', function () {
-            $button.attr('disabled', true);
-            calculate(0);
-        });
+				if ( ids.length ) {
+					calculate();
+				} else {
+					if ( runs !== total ) {
+						next();
+					} else {
+						$status.html( result( success, error ) );
+					}
+				}
 
-    });
+			} );
+		};
+
+		var next = function () {
+			var data = {
+				'action': 'next_batch_of_attachment_ids',
+				'nonce': ajax_object.ajax_nonce
+			};
+
+			$.post( ajax_object.ajax_url, data, function ( response ) {
+
+				if ( response.ids ) {
+					ids = response.ids;
+					calculate();
+				} else {
+					$status.html( ajax_object.ajax_error );
+				}
+
+			} );
+		};
+
+		var status = function ( runs, total ) {
+			return ajax_object.status_message.replace( '{{count}}', runs ).replace( '{{total}}', total ) + '<br>' + ajax_object.patience_message;
+		};
+
+		var result = function ( success, error ) {
+			if ( success && ! error ) {
+				return ajax_object.success_message;
+			}
+			if ( ! success && error ) {
+				return ajax_object.error_message;
+			}
+			if ( success && error ) {
+				return ajax_object.result_message.replace( '{{success}}', success ).replace( '{{error}}', error );
+			}
+		};
+
+		$button.on( 'click', function () {
+			$button.attr( 'disabled', true );
+			$status.html( status( runs, total ) );
+			calculate();
+		} );
+
+	} );
 
 })(jQuery);

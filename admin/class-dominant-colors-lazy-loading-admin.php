@@ -101,14 +101,15 @@ class Dominant_Colors_Lazy_Loading_Admin {
 		wp_localize_script( $this->plugin_name, 'ajax_object', array(
 			'ajax_url'                => admin_url( 'admin-ajax.php' ),
 			'ajax_nonce'              => wp_create_nonce( 'recalculate_dominant_color_post_meta' ),
+
 			'success_message'         => __( 'All dominant colors have been calculated successfully.', 'dominant-colors-lazy-loading' ),
 			'error_message'           => __( 'All attempts seem to have failed. Please make sure that the attachment files exist.', 'dominant-colors-lazy-loading' ),
 			'result_message'          => __( '{{success}} color(s) calculated, but {{error}} attempt(s) failed.', 'dominant-colors-lazy-loading' ),
-			'status_message_singular' => __( 'A single image currently has no dominant color assigned.', 'dominant-colors-lazy-loading' ),
-			'status_message_plural'   => __( '{{count}} images currently have no dominant color assigned.', 'dominant-colors-lazy-loading' ),
-			'calculating_string'      => __( 'Calculating...', 'dominant-colors-lazy-loading' ),
-			'success_string'          => __( '<strong>Success</strong>', 'dominant-colors-lazy-loading' ),
-			'error_string'            => __( '<strong>Error</strong>', 'dominant-colors-lazy-loading' )
+
+			'status_message'          => __( '{{count}} of {{total}} missing dominant colors calculated.', 'dominant-colors-lazy-loading' ),
+			'patience_message'        => __( 'Please be patient while the calculation is in progress. This can take a while if your server is slow or if you have many images. Do not navigate away from this page until this script is done.', 'dominant-colors-lazy-loading' ),
+
+			'ajax_error'        => __( 'An unexpected error has occurred, please reload the page and restart the calculation.', 'dominant-colors-lazy-loading' )
 		) );
 	}
 
@@ -135,21 +136,72 @@ class Dominant_Colors_Lazy_Loading_Admin {
 	 * @since  0.1.0
 	 */
 	public function display_options_page() {
-		$attachments = $this->list_images_without_dominant_colors();
-		$imagick     = class_exists( 'Imagick', false );
-		include_once 'partials/dominant-colors-lazy-loading-admin-display.php';
+
+		$imagick = class_exists( 'Imagick', false );
+
+		$active_tab = 'placeholders';
+		if ( isset( $_GET['tab'] ) ) {
+			$active_tab = $_GET['tab'];
+		}
+
+		include_once 'partials/dominant-colors-lazy-loading-admin-header.php';
+
+		if ( $active_tab == 'placeholders') {
+			include_once 'partials/dominant-colors-lazy-loading-admin-placeholders.php';
+		} else {
+			$attachments = $this->query_images_without_dominant_colors();
+			include_once 'partials/dominant-colors-lazy-loading-admin-calculation.php';
+		}
+
 	}
 
-	public function list_images_without_dominant_colors() {
-		$args = array(
-			'post_type'      => 'attachment',
-			'posts_per_page' => - 1,
-			'meta_key'       => 'dominant_color',
-			'meta_value'     => '',
-			'meta_compare'   => 'NOT EXISTS'
-		);
+	/**
+	 * Query the database for the total amount of missing dominant colors
+	 * and return a batch of IDs for calculation.
+	 *
+	 * @since   0.5.4
+	 *
+	 * @return object
+	 */
+	public function query_images_without_dominant_colors( $limit = 256 ) {
 
-		return get_posts( $args );
+		global $wpdb;
+
+		$total_sql = "SELECT COUNT(*) AS count FROM $wpdb->posts as posts 
+			LEFT JOIN $wpdb->postmeta as meta ON ( posts.ID = meta.post_id AND meta.meta_key = 'dominant_color' ) 
+			WHERE posts.post_mime_type LIKE 'image/%' 
+			AND meta.post_id IS NULL 
+			AND posts.post_type = 'attachment'";
+
+		$chunk_sql = "SELECT ID as id FROM $wpdb->posts as posts 
+			LEFT JOIN $wpdb->postmeta as meta ON ( posts.ID = meta.post_id AND meta.meta_key = 'dominant_color' ) 
+			WHERE posts.post_mime_type LIKE 'image/%' 
+			AND meta.post_id IS NULL 
+			AND posts.post_type = 'attachment'
+			GROUP BY posts.ID
+			ORDER BY posts.post_date DESC
+			LIMIT 0, $limit";
+
+		$total = $wpdb->get_row( $total_sql )->count;
+		$ids   = $wpdb->get_col( $chunk_sql );
+
+		return (object) compact( 'total', 'ids' );
+	}
+
+	/**
+	 * Ajax action for retrieving the next batch of ids.
+	 *
+	 * @since   0.5.4
+	 */
+	public function next_batch_of_attachment_ids () {
+		if ( ! current_user_can( 'manage_options' ) ||
+		     ! wp_verify_nonce( $_REQUEST['nonce'], 'recalculate_dominant_color_post_meta' )
+		) {
+			wp_die();
+		}
+
+		$query = $this->query_images_without_dominant_colors();
+		wp_send_json( $query );
 	}
 
 	/**
