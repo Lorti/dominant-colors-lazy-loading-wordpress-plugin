@@ -4,24 +4,34 @@
 	var check = function () {
 		var images = document.getElementsByClassName( 'lazy' );
 		var viewport = document.documentElement.clientHeight || window.innerHeight;
+		var updated = false;
 
 		[].forEach.call( images, function ( image ) {
 
 			var rect = image.getBoundingClientRect();
 
 			if ( viewport - rect.top > 0 ) {
-				image.src = image.getAttribute( 'data-src' );
-				image.removeAttribute( 'data-src' );
-
-				if ( image.hasAttribute( 'data-srcset' ) ) {
-					image.srcset = image.getAttribute( 'data-srcset' );
-					image.removeAttribute( 'data-srcset' );
-				}
-
-				image.classList.remove( 'lazy' );
+				show( image );
+				updated = true;
 			}
 
 		} );
+
+		if (updated) {
+			check();
+		}
+	};
+
+	var show = function ( image ) {
+		image.src = image.getAttribute( 'data-src' );
+		image.removeAttribute( 'data-src' );
+
+		if ( image.hasAttribute( 'data-srcset' ) ) {
+			image.srcset = image.getAttribute( 'data-srcset' );
+			image.removeAttribute( 'data-srcset' );
+		}
+
+		image.classList.remove( 'lazy' );
 	};
 
 	window.addEventListener( 'load', check, false );
