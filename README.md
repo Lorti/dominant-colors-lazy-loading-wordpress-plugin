@@ -40,6 +40,11 @@ echo $image;
 
 ## Changelog
 
+### 0.5.4
+* Calculation of missing colors should now be able to scale up to millions of images.
+* Admin interface is now split into a tab for placeholder settings and a tab for calculation of missing colors.
+* Replaced placeholders now trigger a viewport check, to see if relayout affected the position of any images.
+
 ### 0.5.3
 * Fixed a bug in displaying whether calculation of an image failed or succeeded.
 
