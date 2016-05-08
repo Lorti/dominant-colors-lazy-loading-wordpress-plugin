@@ -107,7 +107,7 @@ class Dominant_Colors_Lazy_Loading_Admin {
 			'result_message'          => __( '{{success}} color(s) calculated, but {{error}} attempt(s) failed.', 'dominant-colors-lazy-loading' ),
 
 			'status_message'          => __( '{{count}} of {{total}} missing dominant colors calculated.', 'dominant-colors-lazy-loading' ),
-			'patience_message'        => __( 'Please be patient while the calculation is in progress. This can take a while if your server is slow or if you have many images. Do not navigate away from this page until this script is done.', 'dominant-colors-lazy-loading' ),
+			'patience_message'        => __( 'Please be patient while the calculation is in progress. This can take a while if your server is slow or if you have many images.', 'dominant-colors-lazy-loading' ),
 
 			'ajax_error'        => __( 'An unexpected error has occurred, please reload the page and restart the calculation.', 'dominant-colors-lazy-loading' )
 		) );
