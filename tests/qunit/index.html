@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>WordPress QUnit Test Suite</title>
+
+		<!-- Dependencies -->
+		<script src="../../../../../wp-includes/js/jquery/jquery.js"></script>
+
+		<!-- QUnit -->
+		<link rel="stylesheet" href="vendor/qunit.css" type="text/css" media="screen">
+		<script src="vendor/qunit.js"></script>
+		<script>QUnit.config.hidepassed = false;</script>
+	</head>
+	<body>
+		<div id="qunit"></div>
+		<div id="qunit-fixture"></div>
+
+		<!-- Tested files -->
+		<script src="../../admin/js/dominant-colors-lazy-loading-admin.js"></script>
+		<script src="../../public/js/dominant-colors-lazy-loading-public.js"></script>
+
+		<!-- Unit tests -->
+		<script src="test-admin.js"></script>
+		<script src="test-public.js"></script>
+
+	</body>
+</html>
