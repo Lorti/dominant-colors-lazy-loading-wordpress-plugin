@@ -1,4 +1,6 @@
-/**
- * All of the CSS for your admin-specific functionality should be
- * included in this file.
- */
+progress {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 1em;
+}
