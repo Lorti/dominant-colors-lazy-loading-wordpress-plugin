@@ -161,10 +161,13 @@ class Dominant_Colors_Lazy_Loading_Admin {
 	 *
 	 * @since   0.5.4
 	 *
+	 * @param int $limit
+	 *
 	 * @return object
 	 */
-	public function query_images_without_dominant_colors( $limit = 256 ) {
+	public function query_images_without_dominant_colors( $limit = 1024 ) {
 
+		$limit = intval( $limit );
 		global $wpdb;
 
 		$total_sql = "SELECT COUNT(*) AS count FROM $wpdb->posts as posts 
