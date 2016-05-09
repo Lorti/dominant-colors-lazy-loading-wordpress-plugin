@@ -12,6 +12,8 @@
 
 		<progress class="js-progress-bar" value="0" max="<?php echo $attachments->total; ?>"></progress>
 
+		<ul class="js-error-list"></ul>
+
 		<?php if ( $imagick ): ?>
 			<p><input type="button" class="button-secondary js-calculation-button"
 			          value="<?php _e( 'Calculate', 'dominant-colors-lazy-loading' ); ?>"></p>

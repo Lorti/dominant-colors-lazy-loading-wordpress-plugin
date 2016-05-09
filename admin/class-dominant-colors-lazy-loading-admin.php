@@ -107,6 +107,7 @@ class Dominant_Colors_Lazy_Loading_Admin {
 			'result_message'          => __( '{{success}} color(s) calculated, but {{error}} attempt(s) failed.', 'dominant-colors-lazy-loading' ),
 
 			'status_message'          => __( '{{count}} of {{total}} missing dominant colors calculated.', 'dominant-colors-lazy-loading' ),
+			'attachment_message'      => __( 'Calculation for {{attachment}} failed.', 'dominant-colors-lazy-loading' ),
 			'patience_message'        => __( 'Please be patient while the calculation is in progress. This can take a while if your server is slow or if you have many images.', 'dominant-colors-lazy-loading' ),
 
 			'ajax_error'        => __( 'An unexpected error has occurred, please reload the page and restart the calculation.', 'dominant-colors-lazy-loading' )
@@ -332,7 +333,8 @@ class Dominant_Colors_Lazy_Loading_Admin {
 		$attachment_id = intval( $_POST['attachment-id'] );
 		$result        = $this->add_dominant_color_post_meta( $attachment_id );
 		wp_send_json( array(
-			'success' => is_string( $result )
+			'success' => is_string( $result ),
+			'title' => get_the_title ( $attachment_id )
 		) );
 	}
 

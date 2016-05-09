@@ -2,6 +2,7 @@
 	'use strict';
 
 	 var $status;
+	 var $list;
 	 var $progress;
 	 var $button;
 
@@ -27,6 +28,7 @@
 				success++;
 			} else {
 				error++;
+				list( id, response.title );
 			}
 
 			runs++;
@@ -69,6 +71,13 @@
 		return ajax_object.status_message.replace( '{{count}}', runs ).replace( '{{total}}', total ) + '<br>' + ajax_object.patience_message;
 	};
 
+	var list = function ( id, title ) {
+		var url = ajax_object.ajax_url.replace( 'admin-ajax.php', 'upload.php?item=' + id );
+		var link = '<a href="' + url + '" target="_blank">' + title + '</a>';
+		var item = '<li>' + ajax_object.attachment_message.replace( '{{attachment}}', link ) + '</li>';
+		$list.append( item );
+	};
+
 	var result = function () {
 		if ( success && ! error ) {
 			return ajax_object.success_message;
@@ -91,6 +100,7 @@
 
 	$( function () {
 		$status = $( '.js-status-message' );
+		$list = $( '.js-error-list' );
 		$progress = $( '.js-progress-bar' );
 		$button = $( '.js-calculation-button' );
 
