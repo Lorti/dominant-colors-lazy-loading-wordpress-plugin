@@ -4,7 +4,7 @@ Donate link: https://manu.ninja/
 Tags: images, dominant colors, lazy loading, pinterest, javascript, optimization, performance, bandwidth
 Requires at least: 4.4
 Tested up to: 4.4.2
-Stable tag: 0.5.4
+Stable tag: 0.5.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -45,6 +45,9 @@ $image = apply_filters( 'dominant_colors', $image, get_post_thumbnail_id ( $post
 echo $image;`
 
 ## Changelog
+
+### 0.5.5
+* All files that can't be processed are now listed during calculation and link to the particular attachment in the media library.
 
 ### 0.5.4
 * Calculation of missing colors should now be able to scale up to millions of images.
