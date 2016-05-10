@@ -40,6 +40,9 @@ echo $image;
 
 ## Changelog
 
+### 0.5.5
+* All files that can't be processed are now listed during calculation and link to the particular attachment in the media library.
+
 ### 0.5.4
 * Calculation of missing colors should now be able to scale up to millions of images.
 * Admin interface is now split into a tab for placeholder settings and a tab for calculation of missing colors.
