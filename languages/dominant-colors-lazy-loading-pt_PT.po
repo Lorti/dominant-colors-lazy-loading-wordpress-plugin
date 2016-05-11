@@ -5,8 +5,8 @@ msgstr ""
 "Project-Id-Version: Dominant Colors Lazy Loading 0.5.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/dominant-colors-"
 "lazy-loading\n"
-"POT-Creation-Date: 2016-05-09 09:08+0100\n"
-"PO-Revision-Date: 2016-05-09 09:08+0100\n"
+"POT-Creation-Date: 2016-05-10 18:41+0100\n"
+"PO-Revision-Date: 2016-05-10 18:41+0100\n"
 "Last-Translator: Pedro Mendonça <ped.gaspar@gmail.com>\n"
 "Language-Team: Pedro Mendonça <ped.gaspar@gmail.com>\n"
 "Language: pt_PT\n"
@@ -24,7 +24,7 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 
 #: admin/class-dominant-colors-lazy-loading-admin.php:105
-#: admin/partials/dominant-colors-lazy-loading-admin-calculation.php:27
+#: admin/partials/dominant-colors-lazy-loading-admin-calculation.php:29
 msgid "All dominant colors have been calculated successfully."
 msgstr "Todas as cores dominantes foram calculadas com sucesso."
 
@@ -46,6 +46,10 @@ msgid "{{count}} of {{total}} missing dominant colors calculated."
 msgstr "{{count}} de {{total}} sem cor dominante calculada."
 
 #: admin/class-dominant-colors-lazy-loading-admin.php:110
+msgid "Calculation for {{attachment}} failed."
+msgstr "Falhou o cálculo de {{attachment}}."
+
+#: admin/class-dominant-colors-lazy-loading-admin.php:111
 msgid ""
 "Please be patient while the calculation is in progress. This can take a "
 "while if your server is slow or if you have many images."
@@ -53,7 +57,7 @@ msgstr ""
 "Por favor aguarde enquanto o cálculo é executado. Isto pode demorar um pouco "
 "se o seu servidor for lento ou se tiver muitas imagens."
 
-#: admin/class-dominant-colors-lazy-loading-admin.php:112
+#: admin/class-dominant-colors-lazy-loading-admin.php:113
 msgid ""
 "An unexpected error has occurred, please reload the page and restart the "
 "calculation."
@@ -61,29 +65,29 @@ msgstr ""
 "Ocorreu um erro inesperado, por favor carregue a página de novo e reinicie o "
 "cálculo."
 
-#: admin/class-dominant-colors-lazy-loading-admin.php:124
+#: admin/class-dominant-colors-lazy-loading-admin.php:125
 msgid "Dominant Colors Lazy Loading Settings"
 msgstr "Definições do Dominant Colors Lazy Loading"
 
 #. Plugin Name of the plugin/theme
-#: admin/class-dominant-colors-lazy-loading-admin.php:125
+#: admin/class-dominant-colors-lazy-loading-admin.php:126
 msgid "Dominant Colors Lazy Loading"
 msgstr "Dominant Colors Lazy Loading"
 
-#: admin/class-dominant-colors-lazy-loading-admin.php:219
+#: admin/class-dominant-colors-lazy-loading-admin.php:220
 #: admin/partials/dominant-colors-lazy-loading-admin-header.php:19
 msgid "Placeholders"
 msgstr "Placeholders"
 
-#: admin/class-dominant-colors-lazy-loading-admin.php:226
+#: admin/class-dominant-colors-lazy-loading-admin.php:227
 msgid "Format"
 msgstr "Formato"
 
-#: admin/class-dominant-colors-lazy-loading-admin.php:235
+#: admin/class-dominant-colors-lazy-loading-admin.php:236
 msgid "Fallback"
 msgstr "Por omissão"
 
-#: admin/class-dominant-colors-lazy-loading-admin.php:251
+#: admin/class-dominant-colors-lazy-loading-admin.php:252
 msgid ""
 "If you want to preserve the aspect ratio of responsive images enable SVG "
 "placeholders.<br>If you care about transferred bytes, browser compatibility "
@@ -94,11 +98,11 @@ msgstr ""
 "prioridade for minimizar os bytes transferidos e compatibilidade com "
 "navegadores, utilize os <em>placeholders</em> GIF."
 
-#: admin/class-dominant-colors-lazy-loading-admin.php:264
+#: admin/class-dominant-colors-lazy-loading-admin.php:265
 msgid "SVG (More bytes, preserves image aspect ratio)"
 msgstr "SVG (mais bytes, preserva as proporções da imagem)"
 
-#: admin/class-dominant-colors-lazy-loading-admin.php:270
+#: admin/class-dominant-colors-lazy-loading-admin.php:271
 msgid "GIF (Less bytes, compatible with ancient browsers)"
 msgstr "GIF (menos bytes, compatível com navegadores mais antigos)"
 
@@ -118,7 +122,7 @@ msgstr[1] "%s imagens sem cor dominante atribuída."
 msgid "Do you want to calculate now?"
 msgstr "Quer calcular agora?"
 
-#: admin/partials/dominant-colors-lazy-loading-admin-calculation.php:17
+#: admin/partials/dominant-colors-lazy-loading-admin-calculation.php:19
 msgid "Calculate"
 msgstr "Calcular"
 
