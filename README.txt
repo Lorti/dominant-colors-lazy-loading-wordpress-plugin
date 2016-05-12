@@ -16,16 +16,32 @@ This plugin allows you to lazy load your images while showing the dominant color
 
 I plan on adding multiple features in the near future, as outlined in the backlog. To ensure the quality of the plugin please let me know if you encounter any issues. I will reply swiftly and fix them as soon as possible!
 
-The plugin is compatible with [RICG Responsive Images
+### Features
+
+* The plugin calculates the dominant color of an image upon upload.
+* All images attached to posts and pages are automatically replaced with placeholders and load as soon as they enter the viewport to save bandwidth.
+* Galleries added via the default `[gallery]` shortcode are also replaced and loaded as soon as they appear in the viewport.
+* A custom filter for lazy-loading thumbnails or featured images can be used in templates and themes (`apply_filters( 'dominant_colors', $image, $id )`).
+* Dominant colors can be calculated for all existing attachments in the plugin settings.
+    * This has already been tested with thousands of images.
+    * Until the calculation is done you can specify a fallback color for your placeholders.
+    * All files that can't be processed are listed during calculation and link to the particular attachment in the media library.
+* You can choose between GIF and SVG placeholders.
+    * SVG placeholders have the same pixel size and aspect ratio as the original images, instead of being a single square pixel. This way responsive images do not need a wrapper for preserving the original aspect ratio.
+    * GIF placeholders are tiny and have great browser compatibility. They also enable you to use tiny thumbnails as described on [manu.ninja](https://manu.ninja/dominant-colors-for-lazy-loading-images) for your images as soon as I've implemented the feature.
+* The plugin is compatible with [RICG Responsive Images
 ](https://co.wordpress.org/plugins/ricg-responsive-images/), which has been added to WordPress 4.4 as default functionality.
+
+### Demo
+You can see the plugin live at [http://www.karriere.at/blog/](http://www.karriere.at/blog/).
 
 ### Backlog
 
+* Tiny thumbnails as described on [manu.ninja](https://manu.ninja/dominant-colors-for-lazy-loading-images).
+* Fallback for visitors without JavaScript.
+* Function for retrieving the dominant color in various formats (hexadecimal, RGB, HSL…).
 * Ability to change the dominant color to a custom color in the attachment details.
 * Ability to choose a dominant color from a reduced color palette.
-* Option to enable tiny thumbnails as described on [manu.ninja](https://manu.ninja/dominant-colors-for-lazy-loading-images).
-* Function for retrieving the dominant color in various formats (hexadecimal, RGB, HSL…).
-* Fallback for visitors without JavaScript.
 
 ## Installation
 
