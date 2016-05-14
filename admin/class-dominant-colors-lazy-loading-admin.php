@@ -354,4 +354,28 @@ class Dominant_Colors_Lazy_Loading_Admin {
 		return substr( bin2hex( $image ), 0, 6 );
 	}
 
+	/**
+	 * Calculates tiny thumbnails of an image.
+	 *
+	 * @since   0.6.0
+	 *
+	 * @return string
+	 */
+	function calculate_tiny_thumbnails( $path ) {
+		$three = new Imagick( $path );
+		$three->resizeImage( 3, 3, Imagick::FILTER_QUADRATIC, 1 );
+		$three->setFormat( 'GIF' );
+		$four = new Imagick( $path );
+		$four->resizeImage( 4, 4, Imagick::FILTER_QUADRATIC, 1 );
+		$four->setFormat( 'GIF' );
+		$five = new Imagick( $path );
+		$five->resizeImage( 5, 5, Imagick::FILTER_QUADRATIC, 1 );
+		$five->setFormat( 'GIF' );
+		return array(
+			'3x3' => base64_encode( $three ),
+			'4x4' => base64_encode( $four ),
+			'5x5' => base64_encode( $five )
+		);
+	}
+
 }
