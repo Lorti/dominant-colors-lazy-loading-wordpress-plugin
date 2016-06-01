@@ -54,6 +54,18 @@ $image = apply_filters( 'dominant_colors', $image, get_post_thumbnail_id ( $post
 echo $image;
 ```
 
+There is an optional third argument, you can use to specify the format. The available formats are stored as constants in the `Dominant_Colors_Lazy_Loading` class.  If you do not specify a format the filter will use the format you have chosen in the plugin settings.
+
+* `FORMAT_GIF` will output GIF placeholders.
+* `FORMAT_SVG` will output SVG placeholders.
+* `FORMAT_WRAPPED` will output GIF placeholders with wrappers to preserve the aspect ratio of responsive images.
+
+```
+<div class="dcll-wrapper" style="padding-top: 56.25%;">
+    <img class="dcll-image"...
+</div>
+````
+
 ## Changelog
 
 ### 0.5.5
