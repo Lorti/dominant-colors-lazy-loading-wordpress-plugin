@@ -4,7 +4,7 @@ Donate link: https://manu.ninja/
 Tags: images, dominant colors, lazy loading, pinterest, javascript, optimization, performance, bandwidth
 Requires at least: 4.4
 Tested up to: 4.4.2
-Stable tag: 0.5.5
+Stable tag: 0.5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -60,7 +60,21 @@ Please make sure that you have installed and activated the `imagick` PHP extensi
 $image = apply_filters( 'dominant_colors', $image, get_post_thumbnail_id ( $post_id ) );
 echo $image;`
 
+There is an optional third argument, you can use to specify the format. The available formats are stored as constants in the `Dominant_Colors_Lazy_Loading` class. If you do not specify a format the filter will use the format you have chosen in the plugin settings.
+
+* `FORMAT_GIF` will output GIF placeholders.
+* `FORMAT_SVG` will output SVG placeholders.
+* `FORMAT_WRAPPED` will output GIF placeholders with wrappers to preserve the aspect ratio of responsive images.
+
+`<div class="dcll-wrapper" style="padding-top: 56.25%;">
+    <img class="dcll-image"...
+</div>`
+
 ## Changelog
+
+### 0.5.6
+* Added an optional argument for specifying the placeholder format the custom filter returns.
+* Added a third format (only available via the custom filter) that automatically wraps responsive images so that the placeholder has the right aspect ratio.
 
 ### 0.5.5
 * All files that can't be processed are now listed during calculation and link to the particular attachment in the media library.
@@ -91,7 +105,7 @@ echo $image;`
 * Added an option to specify a fallback color if no dominant color was found.
 
 ### 0.3.0
-* Added an option to use SVG placeholders as described by [Shaw](http://codepen.io/shshaw/post/responsive-placeholder-image). SVG placeholders have the same pixel size and aspect ratio as the original images, instead of being a single square pixel. This way responsive images do not need a wrapper for preserving the original aspect ratio. This crosses "Automatically wrapping flexible images (`max-width: 100%; height: auto;`) so that the placeholder has the right aspect ratio." off the road map ;)
+* Added an option to use SVG placeholders as described by [Shaw](http://codepen.io/shshaw/post/responsive-placeholder-image). SVG placeholders have the same pixel size and aspect ratio as the original images, instead of being a single square pixel. This way responsive images do not need a wrapper for preserving the original aspect ratio.
 * Images with no dominant color stored in the database are now automatically skipped.
 
 ### 0.2.2

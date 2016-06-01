@@ -29,6 +29,10 @@
  */
 class Dominant_Colors_Lazy_Loading {
 
+	const FORMAT_GIF = 'gif';
+	const FORMAT_SVG = 'svg';
+	const FORMAT_WRAPPED = 'wrapped';
+	
 	/**
 	 * The loader that's responsible for maintaining and registering all hooks that power
 	 * the plugin.
@@ -69,7 +73,7 @@ class Dominant_Colors_Lazy_Loading {
 	public function __construct() {
 
 		$this->plugin_name = 'dominant-colors-lazy-loading';
-		$this->version = '0.5.5';
+		$this->version = '0.5.6';
 
 		$this->load_dependencies();
 		$this->set_locale();
@@ -175,10 +179,11 @@ class Dominant_Colors_Lazy_Loading {
 
 		$plugin_public = new Dominant_Colors_Lazy_Loading_Public( $this->get_plugin_name(), $this->get_version() );
 
+		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 
 		$this->loader->add_filter( 'the_content', $plugin_public, 'filter', 200 );
-		$this->loader->add_filter( 'dominant_colors', $plugin_public, 'theme_filter', 200, 2 );
+		$this->loader->add_filter( 'dominant_colors', $plugin_public, 'theme_filter', 200, 3 );
 
 	}
 

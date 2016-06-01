@@ -2,7 +2,7 @@
 	'use strict';
 
 	var check = function () {
-		var images = document.getElementsByClassName( 'lazy' );
+		var images = document.getElementsByClassName( 'dcll-image' );
 		var viewport = document.documentElement.clientHeight || window.innerHeight;
 		var updated = false;
 
@@ -31,7 +31,13 @@
 			image.removeAttribute( 'data-srcset' );
 		}
 
-		image.classList.remove( 'lazy' );
+		image.classList.remove( 'dcll-image' );
+
+		var wrapper = image.parentNode;
+		if ( wrapper.classList.contains( 'dcll-wrapper' ) ) {
+			wrapper.parentNode.insertBefore( image, wrapper );
+			wrapper.parentNode.removeChild( wrapper );
+		}
 	};
 
 	window.addEventListener( 'load', check, false );
