@@ -95,4 +95,27 @@ class PublicTest extends WP_UnitTestCase {
 
 	}
 
+	function test_dominant_colors_custom_filter() {
+
+		$id = $this->factory->attachment->create_object( 'image.jpg', 0, array(
+			'post_mime_type' => 'image/jpeg',
+			'post_type'      => 'attachment'
+		) );
+
+		update_post_meta( $id, 'dominant_color', 'dac7b9' );
+
+		$original_image = '<img class="alignnone size-medium wp-image-123" src="http://local.wordpress.dev/wp-content/uploads/2015/05/cats-200x300.png" alt="Cats" width="200" height="300" />';
+
+		$expected_gif = '<img class="alignnone size-medium wp-image-123 dcll-image" src="data:image/gif;base64,R0lGODlhAQABAIABANrHuQAAACwAAAAAAQABAAACAkQBADs=" data-src="http://local.wordpress.dev/wp-content/uploads/2015/05/cats-200x300.png" alt="Cats" width="200" height="300" />';
+
+		$expected_svg = '<img class="alignnone size-medium wp-image-123 dcll-image" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMzAwIj48L3N2Zz4=" data-src="http://local.wordpress.dev/wp-content/uploads/2015/05/cats-200x300.png" style="background: #dac7b9;" alt="Cats" width="200" height="300" />';
+
+		$actual_gif = apply_filters( 'dominant_colors', $original_image, $id, Dominant_Colors_Lazy_Loading::FORMAT_GIF );
+		$actual_svg = apply_filters( 'dominant_colors', $original_image, $id );
+
+		$this->assertEquals( $expected_gif, $actual_gif );
+		$this->assertEquals( $expected_svg, $actual_svg );
+
+	}
+
 }
