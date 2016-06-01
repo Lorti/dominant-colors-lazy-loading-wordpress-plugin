@@ -68,6 +68,10 @@ There is an optional third argument, you can use to specify the format. The avai
 
 ## Changelog
 
+### 0.5.6
+* Added an optional argument for specifying the placeholder format the custom filter returns.
+* Added a third format (only available via the custom filter) that automatically wraps responsive images so that the placeholder has the right aspect ratio.
+
 ### 0.5.5
 * All files that can't be processed are now listed during calculation and link to the particular attachment in the media library.
 
@@ -97,7 +101,7 @@ There is an optional third argument, you can use to specify the format. The avai
 * Added an option to specify a fallback color if no dominant color was found.
 
 ### 0.3.0
-* Added an option to use SVG placeholders as described by [Shaw](http://codepen.io/shshaw/post/responsive-placeholder-image). SVG placeholders have the same pixel size and aspect ratio as the original images, instead of being a single square pixel. This way responsive images do not need a wrapper for preserving the original aspect ratio. This crosses "Automatically wrapping flexible images (`max-width: 100%; height: auto;`) so that the placeholder has the right aspect ratio." off the road map ;)
+* Added an option to use SVG placeholders as described by [Shaw](http://codepen.io/shshaw/post/responsive-placeholder-image). SVG placeholders have the same pixel size and aspect ratio as the original images, instead of being a single square pixel. This way responsive images do not need a wrapper for preserving the original aspect ratio.
 * Images with no dominant color stored in the database are now automatically skipped.
 
 ### 0.2.2
