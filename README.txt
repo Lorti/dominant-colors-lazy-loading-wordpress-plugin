@@ -4,7 +4,7 @@ Donate link: https://manu.ninja/
 Tags: images, dominant colors, lazy loading, pinterest, javascript, optimization, performance, bandwidth
 Requires at least: 4.4
 Tested up to: 4.4.2
-Stable tag: 0.5.6
+Stable tag: 0.5.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -71,6 +71,9 @@ There is an optional third argument, you can use to specify the format. The avai
 </div>`
 
 ## Changelog
+
+### 0.5.7
+* Prior to this version wrappers created by the custom filter via `FORMAT_WRAPPED` were removed from the page after image load. This caused some page jumping, which is why they are now left untouched.
 
 ### 0.5.6
 * Added an optional argument for specifying the placeholder format the custom filter returns.
