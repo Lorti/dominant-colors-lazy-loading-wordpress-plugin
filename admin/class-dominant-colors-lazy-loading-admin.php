@@ -284,6 +284,10 @@ class Dominant_Colors_Lazy_Loading_Admin {
 
 	/**
 	 * @since  0.4.0
+	 *
+	 * @param $color
+	 *
+	 * @return mixed
 	 */
 	public function sanitize_hex_color( $color ) {
 		if ( preg_match('/^[a-f0-9]{6}$/', $color ) )
@@ -323,7 +327,7 @@ class Dominant_Colors_Lazy_Loading_Admin {
 	 *
 	 * @since   0.5.0
 	 */
-	function recalculate_dominant_color_post_meta() {
+	public function recalculate_dominant_color_post_meta() {
 		if ( ! current_user_can( 'manage_options' ) ||
 		     ! wp_verify_nonce( $_REQUEST['nonce'], 'recalculate_dominant_color_post_meta' )
 		) {
@@ -343,9 +347,11 @@ class Dominant_Colors_Lazy_Loading_Admin {
 	 *
 	 * @since   0.5.2
 	 *
+	 * @param $path
+	 *
 	 * @return string
 	 */
-	function calculate_dominant_color( $path ) {
+	public function calculate_dominant_color( $path ) {
 		$image = new Imagick( $path );
 		$image->resizeImage( 256, 256, Imagick::FILTER_QUADRATIC, 1 );
 		$image->quantizeImage( 1, Imagick::COLORSPACE_RGB, 0, false, false );
@@ -359,9 +365,11 @@ class Dominant_Colors_Lazy_Loading_Admin {
 	 *
 	 * @since   0.6.0
 	 *
+	 * @param $path
+	 *
 	 * @return string
 	 */
-	function calculate_tiny_thumbnails( $path ) {
+	public function calculate_tiny_thumbnails( $path ) {
 		$three = new Imagick( $path );
 		$three->resizeImage( 3, 3, Imagick::FILTER_QUADRATIC, 1 );
 		$three->setFormat( 'GIF' );
