@@ -39,13 +39,20 @@ class AdminTest extends WP_UnitTestCase {
 			'post_type'      => 'attachment'
 		) );
 
-		$expected = 'ca7a7b';
-
 		$actual = $this->admin->add_dominant_color_post_meta( $id );
-		$this->assertEquals( $expected, $actual );
+		$this->assertEquals( 'ca7a7b', $actual );
 
 		$actual = get_post_meta( $id, 'dominant_color', true );
-		$this->assertEquals( $expected, $actual );
+		$this->assertEquals( 'ca7a7b', $actual );
+
+		$actual = get_post_meta( $id, 'dominant_color_3x3', true );
+		$this->assertEquals( 'R0lGODlhAwADAPMAAIN5cXtwbKWWlYlPTpBSVcx7geJQV+1WX/FUXQAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAAAAAAAIf4dQ29tcHJlc3NlZCBieSBqcGVnLXJlY29tcHJlc3MALAAAAAADAAMAAAQHEAQxSDEHRQA7', $actual );
+
+		$actual = get_post_meta( $id, 'dominant_color_4x4', true );
+		$this->assertEquals( 'R0lGODlhBAAEAPMAAIyCd42FgYZ5c6ugn21cU15MS3JbXcykqKtHSsBUW8pZYO5pcutOVvZVXvhVXvFNVSH5BAAAAAAAIf4dQ29tcHJlc3NlZCBieSBqcGVnLXJlY29tcHJlc3MALAAAAAAEAAQAAAQMEAQxSDEHJbVYc08EADs=', $actual );
+
+		$actual = get_post_meta( $id, 'dominant_color_5x5', true );
+		$this->assertEquals( 'R0lGODlhBQAFAPQAAIF4baSblox/eo5/eK6ioYN5a2tjXktFRY2Agsi5vF44NHtKSmw+QqVkae2OltROVOhbY+pdZvFdZvZaZOlLUvRSWfhTXPZRW+5HTwAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAAAAAAAIf4dQ29tcHJlc3NlZCBieSBqcGVnLXJlY29tcHJlc3MALAAAAAAFAAUAAAUVIBAIA1EYB5IoC9M4DxRJE1VZFxYCADs=', $actual );
 
 	}
 

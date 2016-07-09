@@ -313,6 +313,12 @@ class Dominant_Colors_Lazy_Loading_Admin {
 			try {
 				$dominant_color = $this->calculate_dominant_color( $path );
 				update_post_meta( $post_id, 'dominant_color', $dominant_color );
+
+				$tiny_thumbnails = $this->calculate_tiny_thumbnails( $path );
+				foreach ( $tiny_thumbnails as $size => $thumbnail ) {
+					update_post_meta( $post_id, 'dominant_color_' . $size, $thumbnail );
+				}
+
 				return $dominant_color;
 			}
 			catch ( Exception $e ) {
@@ -367,18 +373,21 @@ class Dominant_Colors_Lazy_Loading_Admin {
 	 *
 	 * @param $path
 	 *
-	 * @return string
+	 * @return array
 	 */
 	public function calculate_tiny_thumbnails( $path ) {
 		$three = new Imagick( $path );
 		$three->resizeImage( 3, 3, Imagick::FILTER_QUADRATIC, 1 );
 		$three->setFormat( 'GIF' );
+
 		$four = new Imagick( $path );
 		$four->resizeImage( 4, 4, Imagick::FILTER_QUADRATIC, 1 );
 		$four->setFormat( 'GIF' );
+
 		$five = new Imagick( $path );
 		$five->resizeImage( 5, 5, Imagick::FILTER_QUADRATIC, 1 );
 		$five->setFormat( 'GIF' );
+
 		return array(
 			'3x3' => base64_encode( $three ),
 			'4x4' => base64_encode( $four ),
