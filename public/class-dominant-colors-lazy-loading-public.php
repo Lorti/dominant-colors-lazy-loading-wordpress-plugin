@@ -146,7 +146,7 @@ class Dominant_Colors_Lazy_Loading_Public {
 			update_meta_cache( 'post', array_keys( $attachment_ids ) );
 		}
 
-		$format = get_option( 'dominant_colors_placeholder_format', 'svg' );
+		$format = get_option( 'dominant_colors_placeholder_format', Dominant_Colors_Lazy_Loading::FORMAT_SVG );
 
 		foreach ( $selected_images as $image => $attachment_id ) {
 			$dominant_color = get_post_meta( $attachment_id, 'dominant_color', true );
@@ -169,16 +169,28 @@ class Dominant_Colors_Lazy_Loading_Public {
 	 *
 	 * @param $image
 	 * @param $attachment_id
+	 * @param $format
 	 *
 	 * @return string
 	 */
-	public function theme_filter( $image, $attachment_id ) {
+	public function theme_filter( $image, $attachment_id, $format = null ) {
 
 		if ( ! preg_match_all( '/<img [^>]+>/', $image, $matches ) ) {
 			return $image;
 		}
 
-		$format = get_option( 'dominant_colors_placeholder_format', 'svg' );
+		if ( ! is_null( $format ) ) {
+			if ( $format !== Dominant_Colors_Lazy_Loading::FORMAT_GIF &&
+			     $format !== Dominant_Colors_Lazy_Loading::FORMAT_SVG &&
+			     $format !== Dominant_Colors_Lazy_Loading::FORMAT_WRAPPED ) {
+				$format = null;
+			}
+		}
+
+		if ( is_null( $format ) ) {
+			$format = get_option( 'dominant_colors_placeholder_format', Dominant_Colors_Lazy_Loading::FORMAT_SVG );
+		}
+
 		$dominant_color = get_post_meta( $attachment_id, 'dominant_color', true );
 
 		if ( empty( $dominant_color ) ) {
@@ -250,12 +262,17 @@ class Dominant_Colors_Lazy_Loading_Public {
 		$image = str_replace( 'srcset', 'data-srcset', $image );
 
 		if ( preg_match( '/class="/', $image ) ) {
-			$image = preg_replace( '/class="(.*?)"/', 'class="$1 lazy"', $image );
+			$image = preg_replace( '/class="(.*?)"/', 'class="$1 dcll-image"', $image );
 		} else {
-			$image = str_replace( '<img', '<img class="lazy"', $image );
+			$image = str_replace( '<img', '<img class="dcll-image"', $image );
 		}
 
-		if ( ! strcmp($format, 'gif') ) {
+		$image_width  = intval( preg_match( '/width="(\d+)"/', $image, $match_width ) ? $match_width[1] : 1 );
+		$image_height = intval( preg_match( '/height="(\d+)"/', $image, $match_height ) ? $match_height[1] : 1 );
+		$image_aspect_ratio = round( ( $image_height / $image_width ) * 100, 3 );
+
+		if ( $format === Dominant_Colors_Lazy_Loading::FORMAT_GIF ||
+		     $format === Dominant_Colors_Lazy_Loading::FORMAT_WRAPPED ) {
 
 			$header                    = '474946383961';
 			$logical_screen_descriptor = '01000100800100';
@@ -275,12 +292,15 @@ class Dominant_Colors_Lazy_Loading_Public {
 
 			$placeholder = 'data:image/gif;base64,' . base64_encode( hex2bin( $gif ) );
 
-			return str_replace( $match_src[0], sprintf( 'src="%s" data-src="%s"', $placeholder, $image_src, $color ), $image );
+			$image = str_replace( $match_src[0], sprintf( 'src="%s" data-src="%s"', $placeholder, $image_src, $color ), $image );
+
+			if ( $format === Dominant_Colors_Lazy_Loading::FORMAT_GIF ) {
+				return $image;
+			} else {
+				return sprintf('<div class="dcll-wrapper" style="padding-top: %s%%;">%s</div>', $image_aspect_ratio , $image);
+			}
 
 		} else {
-			
-			$image_width  = intval( preg_match( '/width="(\d+)"/', $image, $match_width ) ? $match_width[1] : 1 );
-			$image_height = intval( preg_match( '/height="(\d+)"/', $image, $match_height ) ? $match_height[1] : 1 );
 
 			$svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 %s %s"></svg>';
 			$placeholder = 'data:image/svg+xml;base64,' . base64_encode( sprintf( $svg, $image_width, $image_height ) ) ;

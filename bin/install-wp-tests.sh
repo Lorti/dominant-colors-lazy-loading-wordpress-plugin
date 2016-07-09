@@ -11,7 +11,7 @@ DB_PASS=$3
 DB_HOST=${4-localhost}
 WP_VERSION=${5-latest}
 
-WP_TESTS_DIR=${WP_TESTS_DIR-/tmp/wordpress-tests-lib}
+WP_TESTS_DIR=${WP_TESTS_DIR-/tmp/wordpress-tests-lib/includes}
 WP_CORE_DIR=${WP_CORE_DIR-/tmp/wordpress/}
 
 download() {
@@ -82,12 +82,12 @@ install_test_suite() {
 	fi
 
 	if [ ! -f wp-tests-config.php ]; then
-		download https://develop.svn.wordpress.org/${WP_TESTS_TAG}/wp-tests-config-sample.php "$WP_TESTS_DIR"/wp-tests-config.php
-		sed $ioption "s:dirname( __FILE__ ) . '/src/':'$WP_CORE_DIR':" "$WP_TESTS_DIR"/wp-tests-config.php
-		sed $ioption "s/youremptytestdbnamehere/$DB_NAME/" "$WP_TESTS_DIR"/wp-tests-config.php
-		sed $ioption "s/yourusernamehere/$DB_USER/" "$WP_TESTS_DIR"/wp-tests-config.php
-		sed $ioption "s/yourpasswordhere/$DB_PASS/" "$WP_TESTS_DIR"/wp-tests-config.php
-		sed $ioption "s|localhost|${DB_HOST}|" "$WP_TESTS_DIR"/wp-tests-config.php
+		download https://develop.svn.wordpress.org/trunk/wp-tests-config-sample.php ${WP_TESTS_DIR}/../wp-tests-config.php
+ 		sed $ioption "s:dirname( __FILE__ ) . '/src/':'$WP_CORE_DIR':" ${WP_TESTS_DIR}/../wp-tests-config.php
+ 		sed $ioption "s/youremptytestdbnamehere/$DB_NAME/" ${WP_TESTS_DIR}/../wp-tests-config.php
+ 		sed $ioption "s/yourusernamehere/$DB_USER/" ${WP_TESTS_DIR}/../wp-tests-config.php
+ 		sed $ioption "s/yourpasswordhere/$DB_PASS/" ${WP_TESTS_DIR}/../wp-tests-config.php
+ 		sed $ioption "s|localhost|${DB_HOST}|" ${WP_TESTS_DIR}/../wp-tests-config.php
 	fi
 
 }

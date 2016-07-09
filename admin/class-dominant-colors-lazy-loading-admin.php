@@ -261,13 +261,13 @@ class Dominant_Colors_Lazy_Loading_Admin {
 		<fieldset>
 			<label>
 				<input type="radio" name="dominant_colors_placeholder_format"
-				       value="svg" <?php checked( $format, 'svg' ); ?>>
+				       value="<?php echo Dominant_Colors_Lazy_Loading::FORMAT_SVG; ?>" <?php checked( $format, Dominant_Colors_Lazy_Loading::FORMAT_SVG ); ?>>
 				<?php _e( 'SVG (More bytes, preserves image aspect ratio)', 'dominant-colors-lazy-loading' ); ?>
 			</label>
 			<br>
 			<label>
 				<input type="radio" name="dominant_colors_placeholder_format"
-				       value="gif" <?php checked( $format, 'gif' ); ?>>
+				       value="<?php echo Dominant_Colors_Lazy_Loading::FORMAT_GIF; ?>" <?php checked( $format, Dominant_Colors_Lazy_Loading::FORMAT_GIF ); ?>>
 				<?php _e( 'GIF (Less bytes, compatible with ancient browsers)', 'dominant-colors-lazy-loading' ); ?>
 			</label>
 		</fieldset>
