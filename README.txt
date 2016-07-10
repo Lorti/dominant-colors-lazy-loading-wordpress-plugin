@@ -12,9 +12,9 @@ This plugin allows you to lazy load your images while showing the dominant color
 
 ## Description
 
-This plugin allows you to lazy load your images while showing the dominant color of each image as a placeholder – like Pinterest or Google Images. If you want to know how it works read the article [Dominant Colors for Lazy-Loading Images](https://manu.ninja/dominant-colors-for-lazy-loading-images), where I explain the general concept.
+This plugin allows you to lazy load your images while showing the dominant color of each image as a placeholder – like Pinterest or Google Images. It also enables you to use tiny thumbnails as placeholders. If you want to know how it works read the article [Dominant Colors for Lazy-Loading Images](https://manu.ninja/dominant-colors-for-lazy-loading-images), where I explain the general concept.
 
-I plan on adding multiple features in the near future, as outlined in the backlog. To ensure the quality of the plugin please let me know if you encounter any issues. I will reply swiftly and fix them as soon as possible!
+To ensure the quality of the plugin please let me know if you encounter any issues. I will reply swiftly and fix them as soon as possible!
 
 ### Features
 
@@ -28,20 +28,13 @@ I plan on adding multiple features in the near future, as outlined in the backlo
     * All files that can't be processed are listed during calculation and link to the particular attachment in the media library.
 * You can choose between GIF and SVG placeholders.
     * SVG placeholders have the same pixel size and aspect ratio as the original images, instead of being a single square pixel. This way responsive images do not need a wrapper for preserving the original aspect ratio.
-    * GIF placeholders are tiny and have great browser compatibility. They also enable you to use tiny thumbnails as described on [manu.ninja](https://manu.ninja/dominant-colors-for-lazy-loading-images) for your images as soon as I've implemented the feature.
+    * GIF placeholders are small and have great browser compatibility. They also enable you to use tiny thumbnails as described on [manu.ninja](https://manu.ninja/dominant-colors-for-lazy-loading-images) for your images.
+    * You can set the resolution of tiny thumbnails to 3×3 pixels (120 bytes), 4×4 pixels (128 bytes) or 5×5 pixels (204 bytes).
 * The plugin is compatible with [RICG Responsive Images
 ](https://co.wordpress.org/plugins/ricg-responsive-images/), which has been added to WordPress 4.4 as default functionality.
 
 ### Demo
 You can see the plugin live at [http://www.karriere.at/blog/](http://www.karriere.at/blog/).
-
-### Backlog
-
-* Tiny thumbnails as described on [manu.ninja](https://manu.ninja/dominant-colors-for-lazy-loading-images).
-* Fallback for visitors without JavaScript.
-* Function for retrieving the dominant color in various formats (hexadecimal, RGB, HSL…).
-* Ability to change the dominant color to a custom color in the attachment details.
-* Ability to choose a dominant color from a reduced color palette.
 
 ## Installation
 
@@ -50,7 +43,7 @@ You can see the plugin live at [http://www.karriere.at/blog/](http://www.karrier
 
 ## Frequently Asked Questions
 
-### Why are no dominant colors calculated?
+### Why are no dominant colors and tiny thumbnails calculated?
 
 Please make sure that you have installed and activated the `imagick` PHP extension.
 
@@ -71,6 +64,9 @@ There is an optional third argument, you can use to specify the format. The avai
 </div>`
 
 ## Changelog
+
+### 0.6.0
+* Added all the functionality needed for tiny thumbnails, including tests. Looking forward to any issues that will inevitably occur ;)
 
 ### 0.5.6
 * Added an optional argument for specifying the placeholder format the custom filter returns.
