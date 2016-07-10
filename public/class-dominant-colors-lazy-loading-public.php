@@ -149,7 +149,15 @@ class Dominant_Colors_Lazy_Loading_Public {
 		$format = get_option( 'dominant_colors_placeholder_format', Dominant_Colors_Lazy_Loading::FORMAT_SVG );
 
 		foreach ( $selected_images as $image => $attachment_id ) {
-			$dominant_color = get_post_meta( $attachment_id, 'dominant_color', true );
+			if ( $format === Dominant_Colors_Lazy_Loading::FORMAT_GIF) {
+				$dominant_color = get_post_meta( $attachment_id, 'dominant_color', true );
+			} else {
+				$tiny_thumbnails = get_post_meta( $attachment_id, 'tiny_thumbnails', true );
+				if ( ! empty( $tiny_thumbnails )) {
+					$tiny_thumbnails = unserialize( $tiny_thumbnails );
+					$dominant_color = $tiny_thumbnails[$format];
+				}
+			}
 			if ( empty( $dominant_color ) ) {
 				$dominant_color = get_option( 'dominant_colors_placeholder_fallback' );
 			}
@@ -271,44 +279,66 @@ class Dominant_Colors_Lazy_Loading_Public {
 		$image_height = intval( preg_match( '/height="(\d+)"/', $image, $match_height ) ? $match_height[1] : 1 );
 		$image_aspect_ratio = round( ( $image_height / $image_width ) * 100, 3 );
 
-		if ( $format === Dominant_Colors_Lazy_Loading::FORMAT_GIF ||
-		     $format === Dominant_Colors_Lazy_Loading::FORMAT_WRAPPED ) {
-
-			$header                    = '474946383961';
-			$logical_screen_descriptor = '01000100800100';
-			$image_descriptor          = '2c000000000100010000';
-			$image_data                = '0202440100';
-			$trailer                   = '3b';
-
-			$gif = implode( array(
-				$header,
-				$logical_screen_descriptor,
-				$color,
-				'000000',
-				$image_descriptor,
-				$image_data,
-				$trailer
-			) );
-
-			$placeholder = 'data:image/gif;base64,' . base64_encode( hex2bin( $gif ) );
-
-			$image = str_replace( $match_src[0], sprintf( 'src="%s" data-src="%s"', $placeholder, $image_src, $color ), $image );
-
-			if ( $format === Dominant_Colors_Lazy_Loading::FORMAT_GIF ) {
-				return $image;
-			} else {
-				return sprintf('<div class="dcll-wrapper" style="padding-top: %s%%;">%s</div>', $image_aspect_ratio , $image);
-			}
-
-		} else {
+		if ( $format === Dominant_Colors_Lazy_Loading::FORMAT_SVG ) {
 
 			$svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 %s %s"></svg>';
 			$placeholder = 'data:image/svg+xml;base64,' . base64_encode( sprintf( $svg, $image_width, $image_height ) ) ;
 
 			return str_replace( $match_src[0], sprintf( 'src="%s" data-src="%s" style="background: #%s;"', $placeholder, $image_src, $color ), $image );
 
+		} else {
+
+			$isFallbackColor = strlen( $color ) === 6;
+
+			if ( $format === Dominant_Colors_Lazy_Loading::FORMAT_GIF ||
+			     $format === Dominant_Colors_Lazy_Loading::FORMAT_WRAPPED ||
+			     $isFallbackColor
+			) {
+				$placeholder = $this->create_gif_placeholder( $color );
+			} else {
+				$placeholder = 'data:image/gif;base64,' . $color;
+			}
+
+			$image = str_replace( $match_src[0], sprintf( 'src="%s" data-src="%s"', $placeholder, $image_src, $color ), $image );
+
+			if ( $format === Dominant_Colors_Lazy_Loading::FORMAT_WRAPPED ) {
+				return sprintf( '<div class="dcll-wrapper" style="padding-top: %s%%;">%s</div>', $image_aspect_ratio, $image );
+			}
+
+			return $image;
 		}
 
+	}
+
+	/**
+	 * Creates a single pixel GIF in the specified color and returns it as base64-encoded data URI.
+	 *
+	 * @since 0.6.0
+	 *
+	 * @param $color
+	 *
+	 * @return string
+	 */
+	public function create_gif_placeholder( $color ) {
+		$header                    = '474946383961';
+		$logical_screen_descriptor = '01000100800100';
+		$image_descriptor          = '2c000000000100010000';
+		$image_data                = '0202440100';
+		$trailer                   = '3b';
+
+		$gif = implode( array(
+			$header,
+			$logical_screen_descriptor,
+			$color,
+			'000000',
+			$image_descriptor,
+			$image_data,
+			$trailer
+		) );
+
+		$placeholder = 'data:image/gif;base64,' . base64_encode( hex2bin( $gif ) );
+
+		return $placeholder;
 	}
 
 }

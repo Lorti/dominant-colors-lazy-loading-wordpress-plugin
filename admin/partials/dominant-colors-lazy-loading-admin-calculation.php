@@ -3,9 +3,9 @@
 	<h3><?php _e( 'Calculation', 'dominant-colors-lazy-loading' ); ?></h3>
 
 	<?php if ( $attachments->total ): ?>
-
+		
 		<p class="js-status-message">
-			<?php printf( _n( '%s image currently has no dominant color assigned.', '%s images currently have no dominant color assigned.', $attachments->total, 'dominant-colors-lazy-loading' ), $attachments->total ); ?>
+			<?php printf( _n( '%s image has no dominant color assigned or is missing tiny thumbnails.', '%s images have no dominant color assigned or are missing tiny thumbnails.', $attachments->total, 'dominant-colors-lazy-loading' ), $attachments->total ); ?>
 			<br>
 			<?php _e( 'Do you want to calculate now?', 'dominant-colors-lazy-loading' ); ?>
 		</p>
