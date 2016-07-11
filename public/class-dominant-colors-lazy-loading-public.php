@@ -149,13 +149,16 @@ class Dominant_Colors_Lazy_Loading_Public {
 		$format = get_option( 'dominant_colors_placeholder_format', Dominant_Colors_Lazy_Loading::FORMAT_SVG );
 
 		foreach ( $selected_images as $image => $attachment_id ) {
-			if ( $format === Dominant_Colors_Lazy_Loading::FORMAT_GIF) {
+			if ( $format === Dominant_Colors_Lazy_Loading::FORMAT_GIF ||
+			     $format === Dominant_Colors_Lazy_Loading::FORMAT_SVG ||
+			     $format === Dominant_Colors_Lazy_Loading::FORMAT_WRAPPED
+			) {
 				$dominant_color = get_post_meta( $attachment_id, 'dominant_color', true );
 			} else {
 				$tiny_thumbnails = get_post_meta( $attachment_id, 'tiny_thumbnails', true );
-				if ( ! empty( $tiny_thumbnails )) {
+				if ( ! empty( $tiny_thumbnails ) ) {
 					$tiny_thumbnails = unserialize( $tiny_thumbnails );
-					$dominant_color = $tiny_thumbnails[$format];
+					$dominant_color  = $tiny_thumbnails[ $format ];
 				}
 			}
 			if ( empty( $dominant_color ) ) {
@@ -291,6 +294,7 @@ class Dominant_Colors_Lazy_Loading_Public {
 			$isFallbackColor = strlen( $color ) === 6;
 
 			if ( $format === Dominant_Colors_Lazy_Loading::FORMAT_GIF ||
+			     $format === Dominant_Colors_Lazy_Loading::FORMAT_SVG ||
 			     $format === Dominant_Colors_Lazy_Loading::FORMAT_WRAPPED ||
 			     $isFallbackColor
 			) {

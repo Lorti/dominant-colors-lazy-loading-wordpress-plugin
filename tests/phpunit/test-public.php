@@ -84,6 +84,32 @@ class PublicTest extends WP_UnitTestCase {
 
 	}
 
+	function test_replace_source_with_thumbnails() {
+
+		$image = '<img class="alignnone size-medium wp-image-123" src="http://local.wordpress.dev/wp-content/uploads/2015/05/cats-200x300.png" alt="Cats" width="200" height="300" />';
+
+		$expected = '<img class="alignnone size-medium wp-image-123 dcll-image" src="data:image/gif;base64,R0lGODlhAQABAIABANrHuQAAACwAAAAAAQABAAACAkQBADs=" data-src="http://local.wordpress.dev/wp-content/uploads/2015/05/cats-200x300.png" alt="Cats" width="200" height="300" />';
+
+		$actual = $this->public->replace_source_with_dominant_color( $image, 'dac7b9', Dominant_Colors_Lazy_Loading::FORMAT_GIF_3x3 );
+		$this->assertEquals( $expected, $actual );
+
+		$expected = '<img class="alignnone size-medium wp-image-123 dcll-image" src="data:image/gif;base64,R0lGODlhAwADAPMAAIN5cXtwbKWWlYlPTpBSVcx7geJQV+1WX/FUXQAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAAAAAAALAAAAAADAAMAAAQHEAQxSDEHRQA7" data-src="http://local.wordpress.dev/wp-content/uploads/2015/05/cats-200x300.png" alt="Cats" width="200" height="300" />';
+
+		$actual = $this->public->replace_source_with_dominant_color( $image, 'R0lGODlhAwADAPMAAIN5cXtwbKWWlYlPTpBSVcx7geJQV+1WX/FUXQAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAAAAAAALAAAAAADAAMAAAQHEAQxSDEHRQA7', Dominant_Colors_Lazy_Loading::FORMAT_GIF_3x3 );
+		$this->assertEquals( $expected, $actual );
+
+		$expected = '<img class="alignnone size-medium wp-image-123 dcll-image" src="data:image/gif;base64,R0lGODlhBAAEAPMAAIyCd42FgYZ5c6ugn21cU15MS3JbXcykqKtHSsBUW8pZYO5pcutOVvZVXvhVXvFNVSH5BAAAAAAALAAAAAAEAAQAAAQMEAQxSDEHJbVYc08EADs=" data-src="http://local.wordpress.dev/wp-content/uploads/2015/05/cats-200x300.png" alt="Cats" width="200" height="300" />';
+
+		$actual = $this->public->replace_source_with_dominant_color( $image, 'R0lGODlhBAAEAPMAAIyCd42FgYZ5c6ugn21cU15MS3JbXcykqKtHSsBUW8pZYO5pcutOVvZVXvhVXvFNVSH5BAAAAAAALAAAAAAEAAQAAAQMEAQxSDEHJbVYc08EADs=', Dominant_Colors_Lazy_Loading::FORMAT_GIF_4x4 );
+		$this->assertEquals( $expected, $actual );
+
+		$expected = '<img class="alignnone size-medium wp-image-123 dcll-image" src="data:image/gif;base64,R0lGODlhBQAFAPQAAIF4baSblox/eo5/eK6ioYN5a2tjXktFRY2Agsi5vF44NHtKSmw+QqVkae2OltROVOhbY+pdZvFdZvZaZOlLUvRSWfhTXPZRW+5HTwAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAAAAAAALAAAAAAFAAUAAAUVIBAIA1EYB5IoC9M4DxRJE1VZFxYCADs=" data-src="http://local.wordpress.dev/wp-content/uploads/2015/05/cats-200x300.png" alt="Cats" width="200" height="300" />';
+
+		$actual = $this->public->replace_source_with_dominant_color( $image, 'R0lGODlhBQAFAPQAAIF4baSblox/eo5/eK6ioYN5a2tjXktFRY2Agsi5vF44NHtKSmw+QqVkae2OltROVOhbY+pdZvFdZvZaZOlLUvRSWfhTXPZRW+5HTwAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAAAAAAALAAAAAAFAAUAAAUVIBAIA1EYB5IoC9M4DxRJE1VZFxYCADs=', Dominant_Colors_Lazy_Loading::FORMAT_GIF_5x5 );
+		$this->assertEquals( $expected, $actual );
+
+	}
+
 	function test_replace_source_with_dominant_color_responsive_images() {
 
 		$image = '<img class="alignnone size-medium wp-image-123" src="http://local.wordpress.dev/wp-content/uploads/2015/05/cats-300x129.jpg" alt="cats" width="300" height="129" srcset="http://local.wordpress.dev/wp-content/uploads/2015/05/cats-300x129.jpg 300w, http://local.wordpress.dev/wp-content/uploads/2015/05/cats-768x329.jpg 768w, http://local.wordpress.dev/wp-content/uploads/2015/05/cats-1024x439.jpg 1024w" sizes="(max-width: 300px) 100vw, 300px" />';
