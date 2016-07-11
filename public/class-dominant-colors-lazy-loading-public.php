@@ -273,9 +273,9 @@ class Dominant_Colors_Lazy_Loading_Public {
 		$image = str_replace( 'srcset', 'data-srcset', $image );
 
 		if ( preg_match( '/class="/', $image ) ) {
-			$image = preg_replace( '/class="(.*?)"/', 'class="$1 dcll-image"', $image );
+			$image = preg_replace( '/class="(.*?)"/', 'class="$1 dcll-image dcll-placeholder"', $image );
 		} else {
-			$image = str_replace( '<img', '<img class="dcll-image"', $image );
+			$image = str_replace( '<img', '<img class="dcll-image dcll-placeholder"', $image );
 		}
 
 		$image_width  = intval( preg_match( '/width="(\d+)"/', $image, $match_width ) ? $match_width[1] : 1 );

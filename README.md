@@ -62,6 +62,9 @@ There is an optional third argument, you can use to specify the format. The avai
 ### 0.6.0
 * Added all the functionality needed for tiny thumbnails, including tests. Looking forward to any issues that will inevitably occur ;)
 
+### 0.5.7
+* Prior to this version wrappers created by the custom filter via `FORMAT_WRAPPED` were removed from the page after image load. This caused some page jumping, which is why they are now left untouched.
+
 ### 0.5.6
 * Added an optional argument for specifying the placeholder format the custom filter returns.
 * Added a third format (only available via the custom filter) that automatically wraps responsive images so that the placeholder has the right aspect ratio.
