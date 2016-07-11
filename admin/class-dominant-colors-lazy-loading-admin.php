@@ -189,6 +189,13 @@ class Dominant_Colors_Lazy_Loading_Admin {
 		$total = $wpdb->get_row( $total_sql )->count;
 		$ids   = $wpdb->get_col( $chunk_sql );
 
+		$thumbnail_total_sql = str_replace( 'dominant_color', 'tiny_thumbnails', $total_sql );
+		$thumbnail_chunk_sql = str_replace( 'dominant_color', 'tiny_thumbnails', $chunk_sql );
+		$thumbnail_total     = $wpdb->get_row( $thumbnail_total_sql )->count;
+		$thumbnail_ids       = $wpdb->get_col( $thumbnail_chunk_sql );
+		$total               = max( $total, $thumbnail_total );
+		$ids                 = array_values ( array_unique( array_merge( $ids, $thumbnail_ids ) ) );
+
 		return (object) compact( 'total', 'ids' );
 	}
 
@@ -249,7 +256,7 @@ class Dominant_Colors_Lazy_Loading_Admin {
 	 * @since  0.3.0
 	 */
 	public function dominant_colors_general_callback() {
-		echo '<p>' . __( 'If you want to preserve the aspect ratio of responsive images enable SVG placeholders.<br>If you care about transferred bytes, browser compatibility or preserve the aspect ratio yourself use GIF placeholders.', 'dominant-colors-lazy-loading' ) . '</p>';
+		echo '<p>' . __( 'If you want to preserve the aspect ratio of responsive images enable SVG placeholders.<br>If you care about transferred bytes, browser compatibility or preserve the aspect ratio yourself use GIF placeholders.<br>If you want to use tiny thumbnails you also have to use GIF placeholders.', 'dominant-colors-lazy-loading' ) . '</p>';
 	}
 
 	/**
@@ -262,13 +269,31 @@ class Dominant_Colors_Lazy_Loading_Admin {
 			<label>
 				<input type="radio" name="dominant_colors_placeholder_format"
 				       value="<?php echo Dominant_Colors_Lazy_Loading::FORMAT_SVG; ?>" <?php checked( $format, Dominant_Colors_Lazy_Loading::FORMAT_SVG ); ?>>
-				<?php _e( 'SVG (More bytes, preserves image aspect ratio)', 'dominant-colors-lazy-loading' ); ?>
+				<?php _e( '<strong>SVG</strong> (More bytes, preserves image aspect ratio)', 'dominant-colors-lazy-loading' ); ?>
 			</label>
 			<br>
 			<label>
 				<input type="radio" name="dominant_colors_placeholder_format"
 				       value="<?php echo Dominant_Colors_Lazy_Loading::FORMAT_GIF; ?>" <?php checked( $format, Dominant_Colors_Lazy_Loading::FORMAT_GIF ); ?>>
-				<?php _e( 'GIF (Less bytes, compatible with ancient browsers)', 'dominant-colors-lazy-loading' ); ?>
+				<?php _e( '<strong>GIF</strong> (Less bytes, compatible with ancient browsers)', 'dominant-colors-lazy-loading' ); ?>
+			</label>
+			<br>
+			<label>
+				<input type="radio" name="dominant_colors_placeholder_format"
+				       value="<?php echo Dominant_Colors_Lazy_Loading::FORMAT_GIF_3x3; ?>" <?php checked( $format, Dominant_Colors_Lazy_Loading::FORMAT_GIF_3x3 ); ?>>
+				<?php _e( '<strong>GIF with 3×3 pixels</strong> (Tiny thumbnail with 120 bytes)', 'dominant-colors-lazy-loading' ); ?>
+			</label>
+			<br>
+			<label>
+				<input type="radio" name="dominant_colors_placeholder_format"
+				       value="<?php echo Dominant_Colors_Lazy_Loading::FORMAT_GIF_4x4; ?>" <?php checked( $format, Dominant_Colors_Lazy_Loading::FORMAT_GIF_4x4 ); ?>>
+				<?php _e( '<strong>GIF with 4×4 pixels</strong> (Tiny thumbnail with 128 bytes)', 'dominant-colors-lazy-loading' ); ?>
+			</label>
+			<br>
+			<label>
+				<input type="radio" name="dominant_colors_placeholder_format"
+				       value="<?php echo Dominant_Colors_Lazy_Loading::FORMAT_GIF_5x5; ?>" <?php checked( $format, Dominant_Colors_Lazy_Loading::FORMAT_GIF_5x5 ); ?>>
+				<?php _e( '<strong>GIF with 5×5 pixels</strong> (Tiny thumbnail with 204 bytes)', 'dominant-colors-lazy-loading' ); ?>
 			</label>
 		</fieldset>
 		<?php
@@ -284,6 +309,10 @@ class Dominant_Colors_Lazy_Loading_Admin {
 
 	/**
 	 * @since  0.4.0
+	 *
+	 * @param $color
+	 *
+	 * @return mixed
 	 */
 	public function sanitize_hex_color( $color ) {
 		if ( preg_match('/^[a-f0-9]{6}$/', $color ) )
@@ -309,6 +338,10 @@ class Dominant_Colors_Lazy_Loading_Admin {
 			try {
 				$dominant_color = $this->calculate_dominant_color( $path );
 				update_post_meta( $post_id, 'dominant_color', $dominant_color );
+
+				$tiny_thumbnails = $this->calculate_tiny_thumbnails( $path );
+				update_post_meta( $post_id, 'tiny_thumbnails', serialize( $tiny_thumbnails ) );
+
 				return $dominant_color;
 			}
 			catch ( Exception $e ) {
@@ -323,7 +356,7 @@ class Dominant_Colors_Lazy_Loading_Admin {
 	 *
 	 * @since   0.5.0
 	 */
-	function recalculate_dominant_color_post_meta() {
+	public function recalculate_dominant_color_post_meta() {
 		if ( ! current_user_can( 'manage_options' ) ||
 		     ! wp_verify_nonce( $_REQUEST['nonce'], 'recalculate_dominant_color_post_meta' )
 		) {
@@ -343,15 +376,49 @@ class Dominant_Colors_Lazy_Loading_Admin {
 	 *
 	 * @since   0.5.2
 	 *
+	 * @param $path
+	 *
 	 * @return string
 	 */
-	function calculate_dominant_color( $path ) {
+	public function calculate_dominant_color( $path ) {
 		$image = new Imagick( $path );
 		$image->resizeImage( 256, 256, Imagick::FILTER_QUADRATIC, 1 );
 		$image->quantizeImage( 1, Imagick::COLORSPACE_RGB, 0, false, false );
 		$image->setFormat( 'RGB' );
 
 		return substr( bin2hex( $image ), 0, 6 );
+	}
+
+	/**
+	 * Calculates tiny thumbnails of an image in three different sizes.
+	 *
+	 * @since   0.6.0
+	 *
+	 * @param $path
+	 *
+	 * @return array
+	 */
+	public function calculate_tiny_thumbnails( $path ) {
+		$three = new Imagick( $path );
+		$three->stripImage();
+		$three->resizeImage( 3, 3, Imagick::FILTER_QUADRATIC, 1 );
+		$three->setFormat( 'GIF' );
+
+		$four = new Imagick( $path );
+		$four->stripImage();
+		$four->resizeImage( 4, 4, Imagick::FILTER_QUADRATIC, 1 );
+		$four->setFormat( 'GIF' );
+
+		$five = new Imagick( $path );
+		$five->stripImage();
+		$five->resizeImage( 5, 5, Imagick::FILTER_QUADRATIC, 1 );
+		$five->setFormat( 'GIF' );
+
+		return array(
+			'3x3' => base64_encode( $three ),
+			'4x4' => base64_encode( $four ),
+			'5x5' => base64_encode( $five )
+		);
 	}
 
 }

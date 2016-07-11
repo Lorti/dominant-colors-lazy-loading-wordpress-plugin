@@ -31,8 +31,11 @@ class Dominant_Colors_Lazy_Loading {
 
 	const FORMAT_GIF = 'gif';
 	const FORMAT_SVG = 'svg';
+	const FORMAT_GIF_3x3 = '3x3';
+	const FORMAT_GIF_4x4 = '4x4';
+	const FORMAT_GIF_5x5 = '5x5';
 	const FORMAT_WRAPPED = 'wrapped';
-	
+
 	/**
 	 * The loader that's responsible for maintaining and registering all hooks that power
 	 * the plugin.
@@ -73,7 +76,7 @@ class Dominant_Colors_Lazy_Loading {
 	public function __construct() {
 
 		$this->plugin_name = 'dominant-colors-lazy-loading';
-		$this->version = '0.5.7';
+		$this->version = '0.6.0';
 
 		$this->load_dependencies();
 		$this->set_locale();

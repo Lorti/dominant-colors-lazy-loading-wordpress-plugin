@@ -20,6 +20,18 @@ class AdminTest extends WP_UnitTestCase {
 
 	}
 
+	function test_calculate_tiny_thumbnails() {
+
+		$expected = [
+			'3x3' => 'R0lGODlhAwADAPMAAIN5cXtwbKWWlYlPTpBSVcx7geJQV+1WX/FUXQAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAAAAAAALAAAAAADAAMAAAQHEAQxSDEHRQA7',
+			'4x4' => 'R0lGODlhBAAEAPMAAIyCd42FgYZ5c6ugn21cU15MS3JbXcykqKtHSsBUW8pZYO5pcutOVvZVXvhVXvFNVSH5BAAAAAAALAAAAAAEAAQAAAQMEAQxSDEHJbVYc08EADs=',
+			'5x5' => 'R0lGODlhBQAFAPQAAIF4baSblox/eo5/eK6ioYN5a2tjXktFRY2Agsi5vF44NHtKSmw+QqVkae2OltROVOhbY+pdZvFdZvZaZOlLUvRSWfhTXPZRW+5HTwAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAAAAAAALAAAAAAFAAUAAAUVIBAIA1EYB5IoC9M4DxRJE1VZFxYCADs='
+		];
+		$actual   = $this->admin->calculate_tiny_thumbnails( $this->image );
+		$this->assertEquals( $expected, $actual );
+
+	}
+
 	function test_add_dominant_color_post_meta() {
 
 		$id = $this->factory->attachment->create_object( $this->image, 0, array(
@@ -27,13 +39,14 @@ class AdminTest extends WP_UnitTestCase {
 			'post_type'      => 'attachment'
 		) );
 
-		$expected = 'ca7a7b';
-
 		$actual = $this->admin->add_dominant_color_post_meta( $id );
-		$this->assertEquals( $expected, $actual );
+		$this->assertEquals( 'ca7a7b', $actual );
 
 		$actual = get_post_meta( $id, 'dominant_color', true );
-		$this->assertEquals( $expected, $actual );
+		$this->assertEquals( 'ca7a7b', $actual );
+
+		$actual = get_post_meta( $id, 'tiny_thumbnails', true );
+		$this->assertEquals( 'a:3:{s:3:"3x3";s:120:"R0lGODlhAwADAPMAAIN5cXtwbKWWlYlPTpBSVcx7geJQV+1WX/FUXQAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAAAAAAALAAAAAADAAMAAAQHEAQxSDEHRQA7";s:3:"4x4";s:128:"R0lGODlhBAAEAPMAAIyCd42FgYZ5c6ugn21cU15MS3JbXcykqKtHSsBUW8pZYO5pcutOVvZVXvhVXvFNVSH5BAAAAAAALAAAAAAEAAQAAAQMEAQxSDEHJbVYc08EADs=";s:3:"5x5";s:204:"R0lGODlhBQAFAPQAAIF4baSblox/eo5/eK6ioYN5a2tjXktFRY2Agsi5vF44NHtKSmw+QqVkae2OltROVOhbY+pdZvFdZvZaZOlLUvRSWfhTXPZRW+5HTwAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAAAAAAALAAAAAAFAAUAAAUVIBAIA1EYB5IoC9M4DxRJE1VZFxYCADs=";}', $actual );
 
 	}
 
