@@ -63,6 +63,13 @@ There is an optional third argument, you can use to specify the format. The avai
     <img class="dcll-image"...
 </div>`
 
+## Screenshots
+
+1. The dominant color of each image is shown as a placeholder.
+2. The original images after page load.
+3. The dominant colors of gallery images are shown as placeholders.
+4. The gallery after page load.
+
 ## Changelog
 
 ### 0.6.0
