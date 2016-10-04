@@ -59,6 +59,9 @@ There is an optional third argument, you can use to specify the format. The avai
 
 ## Changelog
 
+### 0.6.1
+* Style attributes set for SVG placeholders are now purged after loading the original images. This fixes an issue where the background color is visible behind transparent PNGs.
+
 ### 0.6.0
 * Added all the functionality needed for tiny thumbnails, including tests. Looking forward to any issues that will inevitably occur ;)
 

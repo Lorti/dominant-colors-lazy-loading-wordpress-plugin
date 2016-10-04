@@ -1,6 +1,8 @@
 (function() {
 	'use strict';
 
+	var reStyle = /background: #[a-f0-9]{6};/;
+
 	var check = function () {
 		var images = document.getElementsByClassName( 'dcll-placeholder' );
 		var viewport = document.documentElement.clientHeight || window.innerHeight;
@@ -23,6 +25,12 @@
 	};
 
 	var show = function ( image ) {
+		if ( image.hasAttribute( 'style' ) ) {
+			image.addEventListener( 'load', function () {
+				image.setAttribute( 'style', image.getAttribute( 'style' ).replace( reStyle, '' ) );
+			} );
+		}
+
 		image.src = image.getAttribute( 'data-src' );
 		image.removeAttribute( 'data-src' );
 
