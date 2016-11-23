@@ -4,7 +4,7 @@ Donate link: https://manu.ninja/
 Tags: images, dominant colors, lazy loading, pinterest, javascript, optimization, performance, bandwidth
 Requires at least: 4.4
 Tested up to: 4.6
-Stable tag: 0.6.1
+Stable tag: 0.6.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -71,6 +71,9 @@ There is an optional third argument, you can use to specify the format. The avai
 4. The gallery after page load.
 
 ## Changelog
+
+### 0.6.2
+* All public hooks are now disabled for Accelerated Mobile Pages when using Automattic's [AMP](https://wordpress.org/plugins/amp/) plugin.
 
 ### 0.6.1
 * Style attributes set for SVG placeholders are now purged after loading the original images. This fixes an issue where the background color is visible behind transparent PNGs.

@@ -76,12 +76,18 @@ class Dominant_Colors_Lazy_Loading {
 	public function __construct() {
 
 		$this->plugin_name = 'dominant-colors-lazy-loading';
-		$this->version = '0.6.1';
+		$this->version     = '0.6.2';
 
 		$this->load_dependencies();
 		$this->set_locale();
 		$this->define_admin_hooks();
-		$this->define_public_hooks();
+
+		// Are we currently on an AMP URL?
+		$is_amp_endpoint = function_exists( 'is_amp_endpoint' ) && is_amp_endpoint();
+
+		if ( ! $is_amp_endpoint ) {
+			$this->define_public_hooks();
+		}
 
 	}
 
@@ -154,7 +160,7 @@ class Dominant_Colors_Lazy_Loading {
 	 * @since    0.1.0
 	 * @access   private
 	 */
-	private function define_admin_hooks() {
+	public function define_admin_hooks() {
 
 		$plugin_admin = new Dominant_Colors_Lazy_Loading_Admin( $this->get_plugin_name(), $this->get_version() );
 
@@ -178,7 +184,7 @@ class Dominant_Colors_Lazy_Loading {
 	 * @since    0.1.0
 	 * @access   private
 	 */
-	private function define_public_hooks() {
+	public function define_public_hooks() {
 
 		$plugin_public = new Dominant_Colors_Lazy_Loading_Public( $this->get_plugin_name(), $this->get_version() );
 
