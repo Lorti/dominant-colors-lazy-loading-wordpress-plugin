@@ -154,7 +154,7 @@ class Dominant_Colors_Lazy_Loading {
 	 * @since    0.1.0
 	 * @access   private
 	 */
-	public function define_admin_hooks() {
+	private function define_admin_hooks() {
 
 		$plugin_admin = new Dominant_Colors_Lazy_Loading_Admin( $this->get_plugin_name(), $this->get_version() );
 
@@ -178,7 +178,7 @@ class Dominant_Colors_Lazy_Loading {
 	 * @since    0.1.0
 	 * @access   private
 	 */
-	public function define_public_hooks() {
+	private function define_public_hooks() {
 
 		$plugin_public = new Dominant_Colors_Lazy_Loading_Public( $this->get_plugin_name(), $this->get_version() );
 
