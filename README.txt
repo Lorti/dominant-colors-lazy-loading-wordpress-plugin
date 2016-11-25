@@ -73,7 +73,7 @@ There is an optional third argument, you can use to specify the format. The avai
 ## Changelog
 
 ### 0.6.2
-* All public hooks are now disabled for Accelerated Mobile Pages when using Automattic's [AMP](https://wordpress.org/plugins/amp/) plugin.
+* All filters are now disabled for Accelerated Mobile Pages when using Automattic's [AMP](https://wordpress.org/plugins/amp/) plugin.
 
 ### 0.6.1
 * Style attributes set for SVG placeholders are now purged after loading the original images. This fixes an issue where the background color is visible behind transparent PNGs.
