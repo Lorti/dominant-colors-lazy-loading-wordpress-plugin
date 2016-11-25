@@ -81,13 +81,7 @@ class Dominant_Colors_Lazy_Loading {
 		$this->load_dependencies();
 		$this->set_locale();
 		$this->define_admin_hooks();
-
-		// Are we currently on an AMP URL?
-		$is_amp_endpoint = function_exists( 'is_amp_endpoint' ) && is_amp_endpoint();
-
-		if ( ! $is_amp_endpoint ) {
-			$this->define_public_hooks();
-		}
+		$this->define_public_hooks();
 
 	}
 

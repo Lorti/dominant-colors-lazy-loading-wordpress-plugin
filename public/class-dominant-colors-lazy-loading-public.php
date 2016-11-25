@@ -111,7 +111,10 @@ class Dominant_Colors_Lazy_Loading_Public {
 	 */
 	public function filter( $content ) {
 
-		if ( ! preg_match_all( '/<img [^>]+>/', $content, $matches ) ) {
+		// Are we currently on an AMP URL?
+		$is_amp_endpoint = function_exists( 'is_amp_endpoint' ) && is_amp_endpoint();
+
+		if ( ! preg_match_all( '/<img [^>]+>/', $content, $matches ) || $is_amp_endpoint ) {
 			return $content;
 		}
 
@@ -186,7 +189,10 @@ class Dominant_Colors_Lazy_Loading_Public {
 	 */
 	public function theme_filter( $image, $attachment_id, $format = null ) {
 
-		if ( ! preg_match_all( '/<img [^>]+>/', $image, $matches ) ) {
+		// Are we currently on an AMP URL?
+		$is_amp_endpoint = function_exists( 'is_amp_endpoint' ) && is_amp_endpoint();
+
+		if ( ! preg_match_all( '/<img [^>]+>/', $image, $matches ) || $is_amp_endpoint ) {
 			return $image;
 		}
 
