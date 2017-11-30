@@ -42,8 +42,14 @@
 		image.classList.remove( 'dcll-placeholder' );
 	};
 
+	var mousemoveFunction = function (event) {
+		check();
+		document.body.removeEventListener('mousemove', mousemoveFunction, false );
+	};
+
 	window.addEventListener( 'load', check, false );
 	window.addEventListener( 'scroll', check, false );
 	window.addEventListener( 'resize', check, false );
 	document.body.addEventListener( 'post-load', check, false );
+	document.body.addEventListener( 'mousemove', mousemoveFunction, false );
 })();
