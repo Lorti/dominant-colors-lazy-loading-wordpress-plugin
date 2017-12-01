@@ -42,14 +42,17 @@
 		image.classList.remove( 'dcll-placeholder' );
 	};
 
-	var mousemoveFunction = function (event) {
+	var firstUserInteraction = function (event) {
 		check();
-		document.body.removeEventListener('mousemove', mousemoveFunction, false );
+		document.body.removeEventListener('mousemove', firstUserInteraction, false );
 	};
 
 	window.addEventListener( 'load', check, false );
 	window.addEventListener( 'scroll', check, false );
 	window.addEventListener( 'resize', check, false );
 	document.body.addEventListener( 'post-load', check, false );
-	document.body.addEventListener( 'mousemove', mousemoveFunction, false );
+	document.body.addEventListener( 'mousemove', firstUserInteraction, false );
+	document.body.addEventListener( 'keydown', firstUserInteraction, false );
+	document.body.addEventListener( 'mousedown', firstUserInteraction, false );
+	document.body.addEventListener( 'touchstart', firstUserInteraction, false );
 })();
