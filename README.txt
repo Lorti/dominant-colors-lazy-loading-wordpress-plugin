@@ -4,7 +4,7 @@ Donate link: https://manu.ninja/
 Tags: images, dominant colors, lazy loading, pinterest, javascript, optimization, performance, bandwidth
 Requires at least: 4.4
 Tested up to: 4.9
-Stable tag: 0.6.2
+Stable tag: 0.6.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -30,8 +30,7 @@ To ensure the quality of the plugin please let me know if you encounter any issu
     * SVG placeholders have the same pixel size and aspect ratio as the original images, instead of being a single square pixel. This way responsive images do not need a wrapper for preserving the original aspect ratio.
     * GIF placeholders are small and have great browser compatibility. They also enable you to use tiny thumbnails as described on [manu.ninja](https://manu.ninja/dominant-colors-for-lazy-loading-images) for your images.
     * You can set the resolution of tiny thumbnails to 3×3 pixels (120 bytes), 4×4 pixels (128 bytes) or 5×5 pixels (204 bytes).
-* The plugin is compatible with [RICG Responsive Images
-](https://co.wordpress.org/plugins/ricg-responsive-images/), which has been added to WordPress 4.4 as default functionality.
+* The plugin is compatible with [RICG Responsive Images](https://co.wordpress.org/plugins/ricg-responsive-images/), which has been added to WordPress 4.4 as default functionality.
 
 ### Demo
 You can see the plugin live at [http://www.karriere.at/blog/](http://www.karriere.at/blog/).
@@ -49,9 +48,11 @@ Please make sure that you have installed and activated the `imagick` PHP extensi
 
 ### How do I use the custom filter in my themes?
 
-`$image = get_the_post_thumbnail( $post_id );
+```
+$image = get_the_post_thumbnail( $post_id );
 $image = apply_filters( 'dominant_colors', $image, get_post_thumbnail_id ( $post_id ) );
-echo $image;`
+echo $image;
+```
 
 There is an optional third argument, you can use to specify the format. The available formats are stored as constants in the `Dominant_Colors_Lazy_Loading` class. If you do not specify a format the filter will use the format you have chosen in the plugin settings.
 
@@ -59,18 +60,16 @@ There is an optional third argument, you can use to specify the format. The avai
 * `FORMAT_SVG` will output SVG placeholders.
 * `FORMAT_WRAPPED` will output GIF placeholders with wrappers to preserve the aspect ratio of responsive images.
 
-`<div class="dcll-wrapper" style="padding-top: 56.25%;">
+```
+<div class="dcll-wrapper" style="padding-top: 56.25%;">
     <img class="dcll-image"...
-</div>`
-
-## Screenshots
-
-1. The dominant color of each image is shown as a placeholder.
-2. The original images after page load.
-3. The dominant colors of gallery images are shown as placeholders.
-4. The gallery after page load.
+</div>
+````
 
 ## Changelog
+
+### 0.6.3
+* The first user interaction triggers a viewport check, that means the first `keydown`, `mousedown`, `mousemove` or `touchstart` event. Each `scroll` and `resize` events still triggers a viewport check.
 
 ### 0.6.2
 * All filters are now disabled for Accelerated Mobile Pages when using Automattic's [AMP](https://wordpress.org/plugins/amp/) plugin.

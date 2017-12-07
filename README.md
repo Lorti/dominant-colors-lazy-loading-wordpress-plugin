@@ -20,8 +20,7 @@ To ensure the quality of the plugin please let me know if you encounter any issu
     * SVG placeholders have the same pixel size and aspect ratio as the original images, instead of being a single square pixel. This way responsive images do not need a wrapper for preserving the original aspect ratio.
     * GIF placeholders are small and have great browser compatibility. They also enable you to use tiny thumbnails as described on [manu.ninja](https://manu.ninja/dominant-colors-for-lazy-loading-images) for your images.
     * You can set the resolution of tiny thumbnails to 3×3 pixels (120 bytes), 4×4 pixels (128 bytes) or 5×5 pixels (204 bytes).
-* The plugin is compatible with [RICG Responsive Images
-](https://co.wordpress.org/plugins/ricg-responsive-images/), which has been added to WordPress 4.4 as default functionality.
+* The plugin is compatible with [RICG Responsive Images](https://co.wordpress.org/plugins/ricg-responsive-images/), which has been added to WordPress 4.4 as default functionality.
 
 ### Demo
 You can see the plugin live at [http://www.karriere.at/blog/](http://www.karriere.at/blog/).
@@ -58,6 +57,9 @@ There is an optional third argument, you can use to specify the format. The avai
 ````
 
 ## Changelog
+
+### 0.6.3
+* The first user interaction triggers a viewport check, that means the first `keydown`, `mousedown`, `mousemove` or `touchstart` event. Each `scroll` and `resize` events still triggers a viewport check.
 
 ### 0.6.2
 * All filters are now disabled for Accelerated Mobile Pages when using Automattic's [AMP](https://wordpress.org/plugins/amp/) plugin.

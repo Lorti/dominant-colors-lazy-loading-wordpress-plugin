@@ -42,9 +42,9 @@
 		image.classList.remove( 'dcll-placeholder' );
 	};
 
-	var firstUserInteraction = function (event) {
+	var firstUserInteraction = function () {
 		check();
-		document.body.removeEventListener('mousemove', firstUserInteraction, false );
+		document.body.removeEventListener( 'mousemove', firstUserInteraction, false );
 		document.body.removeEventListener( 'keydown', firstUserInteraction, false );
 		document.body.removeEventListener( 'mousedown', firstUserInteraction, false );
 		document.body.removeEventListener( 'touchstart', firstUserInteraction, false );
