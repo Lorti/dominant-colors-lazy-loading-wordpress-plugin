@@ -42,8 +42,20 @@
 		image.classList.remove( 'dcll-placeholder' );
 	};
 
+	var firstUserInteraction = function (event) {
+		check();
+		document.body.removeEventListener('mousemove', firstUserInteraction, false );
+		document.body.removeEventListener( 'keydown', firstUserInteraction, false );
+		document.body.removeEventListener( 'mousedown', firstUserInteraction, false );
+		document.body.removeEventListener( 'touchstart', firstUserInteraction, false );
+	};
+
 	window.addEventListener( 'load', check, false );
 	window.addEventListener( 'scroll', check, false );
 	window.addEventListener( 'resize', check, false );
 	document.body.addEventListener( 'post-load', check, false );
+	document.body.addEventListener( 'mousemove', firstUserInteraction, false );
+	document.body.addEventListener( 'keydown', firstUserInteraction, false );
+	document.body.addEventListener( 'mousedown', firstUserInteraction, false );
+	document.body.addEventListener( 'touchstart', firstUserInteraction, false );
 })();
