@@ -131,13 +131,21 @@ class Dominant_Colors_Lazy_Loading_Public {
 
 				$attachment_id = absint( $class_id[1] );
 
-			} else if ( preg_match( '/src="([^"]+)"/', $image, $image_src ) &&
-			            array_key_exists( $image_src[1], $gallery_images )
-			) {
+            } else if (preg_match('/src="([^"]+)"/', $image, $image_src)) {
+                if (array_key_exists($image_src[1], $gallery_images)) {
+                    $attachment_id = $gallery_images[$image_src[1]];
+                } else {
+                    $image_parts = array();
 
-				$attachment_id = $gallery_images[ $image_src[1] ];
-
-			}
+                    //delete size from src-string (i.e. delete "-300x300")
+                    preg_match('/(.*)-(?!.*\1)([0-9]+x[0-9]+)(\..*)($|\n)/', $image_src[1], $image_parts);
+                    $clean_src = $image_src[1];
+                    if (isset($image_parts[1]) && isset($image_parts[3])) {
+                        $clean_src = $image_parts[1] . $image_parts[3];
+                    }
+                    $attachment_id = absint(attachment_url_to_postid($clean_src));
+                }
+            }
 
 			if ( isset( $attachment_id ) ) {
 				$selected_images[ $image ]        = $attachment_id;
