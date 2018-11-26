@@ -58,6 +58,10 @@ There is an optional third argument, you can use to specify the format. The avai
 
 ## Changelog
 
+### 0.7.0
+
+* Added a fallback for images without `wp-image-*` classes. The plugin can now determine the attachment ID from the image URL, using `attachment_url_to_postid`. This should add support for plugins like WooCommerce, who don't output their images with `wp-image-*` classes. Thanks, [@ecksite](https://github.com/Lorti/dominant-colors-lazy-loading-wordpress-plugin/pull/21)!
+
 ### 0.6.3
 * The first user interaction triggers a viewport check, that means the first `keydown`, `mousedown`, `mousemove` or `touchstart` event. Each `scroll` and `resize` events still triggers a viewport check.
 

@@ -3,8 +3,8 @@ Contributors: manuelwieser
 Donate link: https://manu.ninja/
 Tags: images, dominant colors, lazy loading, pinterest, javascript, optimization, performance, bandwidth
 Requires at least: 4.4
-Tested up to: 4.9
-Stable tag: 0.6.3
+Tested up to: 4.9.8
+Stable tag: 0.7.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -67,6 +67,10 @@ There is an optional third argument, you can use to specify the format. The avai
 ````
 
 ## Changelog
+
+### 0.7.0
+
+* Added a fallback for images without `wp-image-*` classes. The plugin can now determine the attachment ID from the image URL, using `attachment_url_to_postid`. This should add support for plugins like WooCommerce, who don't output their images with `wp-image-*` classes. Thanks, [@ecksite](https://github.com/Lorti/dominant-colors-lazy-loading-wordpress-plugin/pull/21)!
 
 ### 0.6.3
 * The first user interaction triggers a viewport check, that means the first `keydown`, `mousedown`, `mousemove` or `touchstart` event. Each `scroll` and `resize` events still triggers a viewport check.

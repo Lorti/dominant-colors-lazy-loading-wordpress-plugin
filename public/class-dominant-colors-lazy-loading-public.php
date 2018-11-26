@@ -141,7 +141,7 @@ class Dominant_Colors_Lazy_Loading_Public {
 				} else {
 					$image_parts = array();
 
-					//delete size from src-string (i.e. delete "-300x300")
+					// Delete size from URL (`-300x300`)
 					preg_match( '/(.*)-(?!.*\1)([0-9]+x[0-9]+)(\..*)($|\n)/', $image_src[1], $image_parts );
 					$clean_src = $image_src[1];
 					if ( isset( $image_parts[1] ) && isset( $image_parts[3] ) ) {
