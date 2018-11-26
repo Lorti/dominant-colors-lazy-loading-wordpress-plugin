@@ -44,6 +44,7 @@ class Dominant_Colors_Lazy_Loading_Public {
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    0.1.0
+	 *
 	 * @param      string $plugin_name The name of the plugin.
 	 * @param      string $version The version of this plugin.
 	 */
@@ -73,7 +74,9 @@ class Dominant_Colors_Lazy_Loading_Public {
 		 * class.
 		 */
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/dominant-colors-lazy-loading-public.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name,
+			plugin_dir_url( __FILE__ ) . 'css/dominant-colors-lazy-loading-public.css', array(), $this->version,
+			'all' );
 
 	}
 
@@ -96,7 +99,8 @@ class Dominant_Colors_Lazy_Loading_Public {
 		 * class.
 		 */
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/dominant-colors-lazy-loading-public.js', array(), $this->version, true );
+		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/dominant-colors-lazy-loading-public.js',
+			array(), $this->version, true );
 
 	}
 
@@ -131,12 +135,20 @@ class Dominant_Colors_Lazy_Loading_Public {
 
 				$attachment_id = absint( $class_id[1] );
 
-			} else if ( preg_match( '/src="([^"]+)"/', $image, $image_src ) &&
-			            array_key_exists( $image_src[1], $gallery_images )
-			) {
+			} else if ( preg_match( '/src="([^"]+)"/', $image, $image_src ) ) {
+				if ( array_key_exists( $image_src[1], $gallery_images ) ) {
+					$attachment_id = $gallery_images[ $image_src[1] ];
+				} else {
+					$image_parts = array();
 
-				$attachment_id = $gallery_images[ $image_src[1] ];
-
+					//delete size from src-string (i.e. delete "-300x300")
+					preg_match( '/(.*)-(?!.*\1)([0-9]+x[0-9]+)(\..*)($|\n)/', $image_src[1], $image_parts );
+					$clean_src = $image_src[1];
+					if ( isset( $image_parts[1] ) && isset( $image_parts[3] ) ) {
+						$clean_src = $image_parts[1] . $image_parts[3];
+					}
+					$attachment_id = absint( attachment_url_to_postid( $clean_src ) );
+				}
 			}
 
 			if ( isset( $attachment_id ) ) {
@@ -168,7 +180,8 @@ class Dominant_Colors_Lazy_Loading_Public {
 				$dominant_color = get_option( 'dominant_colors_placeholder_fallback' );
 			}
 			if ( ! empty( $dominant_color ) ) {
-				$content = str_replace( $image, $this->replace_source_with_dominant_color( $image, $dominant_color, $format ), $content );
+				$content = str_replace( $image,
+					$this->replace_source_with_dominant_color( $image, $dominant_color, $format ), $content );
 			}
 		}
 
@@ -284,16 +297,18 @@ class Dominant_Colors_Lazy_Loading_Public {
 			$image = str_replace( '<img', '<img class="dcll-image dcll-placeholder"', $image );
 		}
 
-		$image_width  = intval( preg_match( '/width="(\d+)"/', $image, $match_width ) ? $match_width[1] : 1 );
-		$image_height = intval( preg_match( '/height="(\d+)"/', $image, $match_height ) ? $match_height[1] : 1 );
+		$image_width        = intval( preg_match( '/width="(\d+)"/', $image, $match_width ) ? $match_width[1] : 1 );
+		$image_height       = intval( preg_match( '/height="(\d+)"/', $image, $match_height ) ? $match_height[1] : 1 );
 		$image_aspect_ratio = round( ( $image_height / $image_width ) * 100, 3 );
 
 		if ( $format === Dominant_Colors_Lazy_Loading::FORMAT_SVG ) {
 
-			$svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 %s %s"></svg>';
-			$placeholder = 'data:image/svg+xml;base64,' . base64_encode( sprintf( $svg, $image_width, $image_height ) ) ;
+			$svg         = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 %s %s"></svg>';
+			$placeholder = 'data:image/svg+xml;base64,' . base64_encode( sprintf( $svg, $image_width, $image_height ) );
 
-			return str_replace( $match_src[0], sprintf( 'src="%s" data-src="%s" style="background: #%s;"', $placeholder, $image_src, $color ), $image );
+			return str_replace( $match_src[0],
+				sprintf( 'src="%s" data-src="%s" style="background: #%s;"', $placeholder, $image_src, $color ),
+				$image );
 
 		} else {
 
@@ -309,10 +324,12 @@ class Dominant_Colors_Lazy_Loading_Public {
 				$placeholder = 'data:image/gif;base64,' . $color;
 			}
 
-			$image = str_replace( $match_src[0], sprintf( 'src="%s" data-src="%s"', $placeholder, $image_src, $color ), $image );
+			$image = str_replace( $match_src[0], sprintf( 'src="%s" data-src="%s"', $placeholder, $image_src, $color ),
+				$image );
 
 			if ( $format === Dominant_Colors_Lazy_Loading::FORMAT_WRAPPED ) {
-				return sprintf( '<div class="dcll-wrapper" style="padding-top: %s%%;">%s</div>', $image_aspect_ratio, $image );
+				return sprintf( '<div class="dcll-wrapper" style="padding-top: %s%%;">%s</div>', $image_aspect_ratio,
+					$image );
 			}
 
 			return $image;
