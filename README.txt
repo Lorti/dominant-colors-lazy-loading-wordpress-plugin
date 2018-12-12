@@ -4,7 +4,7 @@ Donate link: https://manu.ninja/
 Tags: images, dominant colors, lazy loading, pinterest, javascript, optimization, performance, bandwidth
 Requires at least: 4.4
 Tested up to: 5.0
-Stable tag: 0.7.0
+Stable tag: 0.8.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 

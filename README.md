@@ -58,6 +58,10 @@ There is an optional third argument, you can use to specify the format. The avai
 
 ## Changelog
 
+### 0.8.0
+
+* Added an option for `<noscript>` tags to the admin interface. The tags add a lot of HTML, but they're great for users with JavaScript disabled and can be good for SEO (your mileage may vary).
+
 ### 0.7.0
 
 * Added a fallback for images without `wp-image-*` classes. The plugin can now determine the attachment ID from the image URL, using `attachment_url_to_postid`. This should add support for plugins like WooCommerce, who don't output their images with `wp-image-*` classes. Thanks, [@ecksite](https://github.com/Lorti/dominant-colors-lazy-loading-wordpress-plugin/pull/21)!
