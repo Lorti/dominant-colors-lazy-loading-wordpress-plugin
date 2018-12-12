@@ -247,8 +247,18 @@ class Dominant_Colors_Lazy_Loading_Admin {
 			array( 'label_for' => 'dominant_colors_placeholder_fallback' )
 		);
 
+        add_settings_field(
+            'dominant_colors_placeholder_noscript',
+            __( 'Add &lt;noscript&gt;?', 'dominant-colors-lazy-loading' ),
+            array( $this, 'dominant_colors_placeholder_noscript_callback' ),
+            $this->plugin_name,
+            'dominant_colors_general',
+            array( 'label_for' => 'dominant_colors_placeholder_noscript' )
+        );
+
 		register_setting( $this->plugin_name, 'dominant_colors_placeholder_format' );
 		register_setting( $this->plugin_name, 'dominant_colors_placeholder_fallback', array( $this, 'sanitize_hex_color' ) );
+		register_setting( $this->plugin_name, 'dominant_colors_placeholder_noscript' );
 
 	}
 
@@ -307,7 +317,21 @@ class Dominant_Colors_Lazy_Loading_Admin {
 		echo '#<input type="text" name="dominant_colors_placeholder_fallback" id="dominant_colors_placeholder_fallback" value="' . $fallback . '" placeholder="bada55">';
 	}
 
-	/**
+    /**
+     * @since  0.8.0
+     */
+    public function dominant_colors_placeholder_noscript_callback() {
+        $noscript = get_option( 'dominant_colors_placeholder_noscript', 0 );
+        ?>
+        <input type="checkbox"
+               id="dominant_colors_placeholder_noscript"
+               name="dominant_colors_placeholder_noscript"
+               value="1" <?php checked( $noscript, 1 ); ?>>
+        <?php
+        _e( '(Adds a lot of HTML, but can be good for SEO and users w/o JavaScript) ' );
+    }
+
+    /**
 	 * @since  0.4.0
 	 *
 	 * @param $color
