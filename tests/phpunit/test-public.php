@@ -144,4 +144,15 @@ class PublicTest extends WP_UnitTestCase {
 
 	}
 
+    function test_replace_source_and_add_noscript_element() {
+
+        $image = '<img class="wp-image-123" src="http://example.com/wp-content/uploads/2015/05/cats-200x300.png">';
+
+        $expected = '<img class="wp-image-123 dcll-image dcll-placeholder" src="data:image/gif;base64,R0lGODlhAQABAIABANrHuQAAACwAAAAAAQABAAACAkQBADs=" data-src="http://example.com/wp-content/uploads/2015/05/cats-200x300.png"><noscript><img class="wp-image-123" src="http://example.com/wp-content/uploads/2015/05/cats-200x300.png"></noscript>';
+
+        $actual = $this->public->replace_source_with_dominant_color( $image, 'dac7b9', Dominant_Colors_Lazy_Loading::FORMAT_GIF, true );
+        $this->assertEquals( $expected, $actual );
+
+    }
+
 }

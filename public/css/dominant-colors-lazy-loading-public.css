@@ -11,3 +11,8 @@
     width: 100%;
     height: 100%;
 }
+
+/* A theme that works without JavaScript should have a `no-js` class, similar the default WordPress themes. */
+.no-js .dcll-placeholder {
+    display: none;
+}

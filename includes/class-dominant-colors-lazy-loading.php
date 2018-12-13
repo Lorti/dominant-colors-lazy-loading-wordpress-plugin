@@ -76,7 +76,7 @@ class Dominant_Colors_Lazy_Loading {
 	public function __construct() {
 
 		$this->plugin_name = 'dominant-colors-lazy-loading';
-		$this->version     = '0.7.0';
+		$this->version     = '0.8.0';
 
 		$this->load_dependencies();
 		$this->set_locale();

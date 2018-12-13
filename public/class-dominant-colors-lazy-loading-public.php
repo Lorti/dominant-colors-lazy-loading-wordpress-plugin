@@ -180,8 +180,9 @@ class Dominant_Colors_Lazy_Loading_Public {
 				$dominant_color = get_option( 'dominant_colors_placeholder_fallback' );
 			}
 			if ( ! empty( $dominant_color ) ) {
+			    $noscript = get_option( 'dominant_colors_placeholder_noscript', false );
 				$content = str_replace( $image,
-					$this->replace_source_with_dominant_color( $image, $dominant_color, $format ), $content );
+					$this->replace_source_with_dominant_color( $image, $dominant_color, $format, $noscript ), $content );
 			}
 		}
 
@@ -228,7 +229,8 @@ class Dominant_Colors_Lazy_Loading_Public {
 		}
 
 		if ( ! empty( $dominant_color ) ) {
-			$image = $this->replace_source_with_dominant_color( $image, $dominant_color, $format );
+            $noscript = get_option( 'dominant_colors_placeholder_noscript', false );
+			$image = $this->replace_source_with_dominant_color( $image, $dominant_color, $format, $noscript );
 		}
 
 		return $image;
@@ -271,10 +273,11 @@ class Dominant_Colors_Lazy_Loading_Public {
 	 * @param $image
 	 * @param $color
 	 * @param $format
+	 * @param $noscript
 	 *
 	 * @return string
 	 */
-	public function replace_source_with_dominant_color( $image, $color, $format ) {
+	public function replace_source_with_dominant_color( $image, $color, $format, $noscript = false ) {
 		if ( empty( $color ) ) {
 			return $image;
 		}
@@ -288,6 +291,11 @@ class Dominant_Colors_Lazy_Loading_Public {
 		if ( preg_match( '/src="data/', $image ) ) {
 			return $image;
 		}
+
+        $noscript_element = '';
+		if ($noscript) {
+            $noscript_element = sprintf('<noscript>%s</noscript>', $image);
+        }
 
 		$image = str_replace( 'srcset', 'data-srcset', $image );
 
@@ -308,7 +316,7 @@ class Dominant_Colors_Lazy_Loading_Public {
 
 			return str_replace( $match_src[0],
 				sprintf( 'src="%s" data-src="%s" style="background: #%s;"', $placeholder, $image_src, $color ),
-				$image );
+				$image ) . $noscript_element;
 
 		} else {
 
@@ -332,7 +340,7 @@ class Dominant_Colors_Lazy_Loading_Public {
 					$image );
 			}
 
-			return $image;
+			return $image . $noscript_element;
 		}
 
 	}
