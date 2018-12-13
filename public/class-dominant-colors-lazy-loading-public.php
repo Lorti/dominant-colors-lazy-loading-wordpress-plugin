@@ -277,7 +277,7 @@ class Dominant_Colors_Lazy_Loading_Public {
 	 *
 	 * @return string
 	 */
-	public function replace_source_with_dominant_color( $image, $color, $format, $noscript ) {
+	public function replace_source_with_dominant_color( $image, $color, $format, $noscript = false ) {
 		if ( empty( $color ) ) {
 			return $image;
 		}
