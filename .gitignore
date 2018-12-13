@@ -26,3 +26,8 @@ nbproject
 intermediate
 .idea
 cache
+
+# Files added by `install-wp-tests.sh`…
+wp-tests-config.php
+tests/phpunit/data
+tests/phpunit/includes
