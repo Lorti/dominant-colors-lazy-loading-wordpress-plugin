@@ -282,6 +282,10 @@ class Dominant_Colors_Lazy_Loading_Public {
 			return $image;
 		}
 
+		if ( preg_match('/class="[^"]*\bdisable-dcll\b[^"]*"/', $image)) { //if the class disable-dcll is present
+			return $image;
+		}
+
 		$image_src = preg_match( '/src="([^"]+)"/', $image, $match_src ) ? $match_src[1] : '';
 
 		if ( ! $image_src ) {

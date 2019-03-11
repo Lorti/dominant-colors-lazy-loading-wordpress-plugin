@@ -9,7 +9,7 @@ To ensure the quality of the plugin please let me know if you encounter any issu
 ### Features
 
 * The plugin calculates the dominant color of an image upon upload.
-* All images attached to posts and pages are automatically replaced with placeholders and load as soon as they enter the viewport to save bandwidth.
+* All images attached to posts and pages are automatically replaced with placeholders and load as soon as they enter the viewport to save bandwidth. To disable placeholders for certain images you can use the class `disable-dcll`.
 * Galleries added via the default `[gallery]` shortcode are also replaced and loaded as soon as they appear in the viewport.
 * A custom filter for lazy-loading thumbnails or featured images can be used in templates and themes (`apply_filters( 'dominant_colors', $image, $id )`).
 * Dominant colors can be calculated for all existing attachments in the plugin settings.
